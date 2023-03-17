@@ -7,4 +7,3 @@ https://sites.google.com/view/stephanie-russo/projetos
 https://sites.google.com/view/lucas-lima
 
 https://sites.google.com/view/rafael-giannico
-.
