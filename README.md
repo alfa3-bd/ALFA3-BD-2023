@@ -10,4 +10,4 @@ https://sites.google.com/view/rafael-giannico
 
 https://sites.google.com/view/luisfeliperezende/
 
-https://sites.google.com/view/indicesindividuais-jose-g-a-jr/in%C3%ADcio
+https://sites.google.com/view/indicesindividuais-jose-g-a-jr/
