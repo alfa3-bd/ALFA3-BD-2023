@@ -1,0 +1,67 @@
+{% extends "professor/base/base.html" %}
+
+{% block title %} Banco de Frases {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+            <div class="page-wrapper">
+                <!-- [ Main Content ] start -->
+                <div class="d-flex justify-content-center">
+                    <!-- [ basic-table ] start -->
+                    <div class="col-xl-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Tabela de Frases</h5>
+                                <span class="d-block m-t-5">Frases no banco de frases para o professor</span>
+                            </div>
+                            <div class="card-block table-border-style">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Frase</th>
+                                                <th>Tipo</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for frase in frases %}
+                                                <tr>
+                                                    <th scope="row">{{ forloop.counter }}</th>
+                                                    <td>{{ frase.frase }}</td>
+                                                    {% if frase.tipo == 1 %}
+                                                        <td><p class="text-success mb-1">Palavras Aleatórias</p></td>
+                                                    {% elif frase.tipo == 2 %}
+                                                        <td><p class="text-warning mb-1">Palavras Simples</p></td>
+                                                    {% elif frase.tipo == 3 %}
+                                                        <td><p class="text-danger mb-1">Pseudo Palavras</p></td>
+                                                    {% else %}
+                                                        <td><p class="text-dark mb-1">Tipo não Registrado</p></td>
+                                                    {% endif %}
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- [ basic-table ] end -->
+                </div>
+                <!-- [ Main Content ] end -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
