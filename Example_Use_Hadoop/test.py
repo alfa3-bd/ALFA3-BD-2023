@@ -1,27 +1,41 @@
-# https://pythonhosted.org/pywebhdfs/
-
 from pywebhdfs.webhdfs import PyWebHdfsClient
 
 hdfs = PyWebHdfsClient(host='localhost',port='9870', user_name='root')
 
+#To use this client
+PyWebHdfsClient(host='host',port='50070', user_name='hdfs')
 
-# Append file
+# Appends to an existing file on HDFS
 my_data = '01010101010101010101010101010101'
-my_file = '/test/myfile.txt'
+my_file = 'user/hdfs/data/myfile.txt'
 hdfs.append_file(my_file, my_data)
 
-# Create File
+# Creates a new file on HDFS
 my_data = '01010101010101010101010101010101'
-my_file = '/user/root/test/test.txt'
+my_file = 'user/hdfs/data/myfile.txt'
 hdfs.create_file(my_file, my_data)
 
-my_dir = '/user/root/test'
-print(hdfs.get_file_dir_status(my_dir))
+# Delete an existing file or directory from HDFS
+my_file = 'user/hdfs/data/myfile.txt'
+hdfs.delete_file_dir(my_file)
 
-my_dir = '/user/root/test'
-print(hdfs.list_dir(my_dir))
+# Get the file_status of a single file or directory on HDFS
+my_file = 'user/hdfs/data/myfile.txt'
+hdfs.get_file_dir_status(my_file)
+
+# Get a list of file_status for all files and directories inside an HDFS directory
+my_dir = 'user/hdfs'
+hdfs.list_dir(my_dir)
+
+# Create a new directory on HDFS
+my_dir = 'user/hdfs/data/new_dir'
+hdfs.make_dir(my_dir)
+
+# Reads from a file on HDFS and returns the content
+my_file = 'user/hdfs/data/myfile.txt'
+hdfs.read_file(my_file)
 
 # Rename an existing directory or file on HDFS
-current_dir = '/user/root/teste'
-destination_dir = '/user/root/test'
+current_dir = 'user/hdfs/data/my_dir'
+destination_dir = 'user/hdfs/data/renamed_dir'
 hdfs.rename_file_dir(current_dir, destination_dir)
