@@ -1,4 +1,6 @@
-# Projeto ALFA2-BD
+# Projeto ALFA3-BD
+
+Continuação do projeto ALFA2-BD
 
 ## Explicação da Estrutura
 

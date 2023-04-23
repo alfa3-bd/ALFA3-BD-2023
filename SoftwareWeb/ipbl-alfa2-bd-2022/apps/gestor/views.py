@@ -165,6 +165,164 @@ def escolas(request):
 
     return response
 
+def professores(request):
+
+    identificador = request.COOKIES.get('identificador_gestor')
+
+    scripts_mongodb = ScriptsMongoDB()
+
+    professores_query = scripts_mongodb.get_data_find(
+        collection_name='professores',
+        filter = {}
+    )
+
+    professores=[]
+    for professor in professores_query:
+        professores.append(professor)
+
+    scripts_mongodb.close_connection()
+
+    context = {
+        'segment': 'professores',
+        'professores': professores,
+    }
+
+    html_template = loader.get_template('gestor/screens/professores.html')
+    response = HttpResponse(html_template.render(context, request))
+    response.set_cookie('identificador_gestor', identificador)
+
+    return response
+
+def cadastro_professores(request):
+    context = {
+        'segment': 'professores',
+        'err':''
+    }
+     
+    html_template = loader.get_template('gestor/screens/cadastro_professores.html')
+    response = HttpResponse(html_template.render(context, request))
+    return response
+
+def submit_professores(request):
+    crypto = CryptoHelper()
+
+    context = {
+        'segment': 'professores',
+        'err':''
+    }
+
+    scripts_mongodb = ScriptsMongoDB()
+    id = scripts_mongodb.create_id()
+    
+    scripts_mongodb.insert_object(
+        collection_name="professores",
+        object={
+            '_id': id,
+            'identificador': request.POST["cpf"],
+            'nome': request.POST["fst_name_prof"],
+            'sobrenome': request.POST["scn_name_prof"],
+            'hash_senha' : crypto.encrypt_message(request.POST["password"]),
+            'turma':[]
+        }
+    )
+
+    scripts_mongodb.close_connection()
+
+    response = redirect('/gestor/professores', context)
+
+    return response
+
+def alunos(request):
+
+    enum = {
+        "1":"Normal",
+        "2":"Especial",
+        "3":"Superdotado"
+    }
+
+    scripts_mongodb = ScriptsMongoDB()
+
+    alunos_query = scripts_mongodb.get_data_find(
+        collection_name='alunos',
+        filter = {}
+    )
+
+    list_alunos = []
+
+    for aluno in alunos_query:
+
+        turma = scripts_mongodb.get_object_by_id(
+            collection_name='turmas',
+            _id=aluno["turma"]
+        )
+        aluno["turma"] = turma
+        aluno["tipo"] = enum.get(str(aluno["tipo"]))
+        list_alunos.append(aluno)
+
+    scripts_mongodb.close_connection()
+
+    context = {
+        'segment': 'alunos',
+        'alunos': list_alunos,
+    }
+
+    html_template = loader.get_template('gestor/screens/alunos.html')
+    response = HttpResponse(html_template.render(context, request))
+
+    return response
+
+def cadastro_alunos(request):
+
+    scripts_mongodb = ScriptsMongoDB()
+
+    turmas_query = scripts_mongodb.get_data_find(
+        collection_name='turmas',
+        filter = {}
+    )
+
+    list_turmas = []
+
+    for turma in turmas_query:
+        turma["id"] = turma["_id"]
+        list_turmas.append(turma)
+
+    print(list_turmas)
+
+    context = {
+        'segment': 'alunos',
+        'turmas':list_turmas
+    }
+
+    html_template = loader.get_template('gestor/screens/cadastro_alunos.html')
+    response = HttpResponse(html_template.render(context, request))
+    return response
+
+def submit_alunos(request):
+    context = {
+        'segment': 'alunos',
+        'err':''
+    }
+
+    scripts_mongodb = ScriptsMongoDB()
+    id = scripts_mongodb.create_id()
+    
+    scripts_mongodb.insert_object(
+        collection_name="alunos",
+        object={
+            '_id': id,
+            'nome': request.POST["fst_name_aluno"],
+            'sobrenome': request.POST["scn_name_aluno"],
+            'turma': request.POST["turma"],
+            'tipo': request.POST["tipo"]
+        }
+    )
+
+    scripts_mongodb.close_connection()
+
+    response = redirect('/gestor/alunos', context)
+
+    return response
+
 def gestores_escolares(request):
     identificador = request.COOKIES.get('identificador_gestor')
 

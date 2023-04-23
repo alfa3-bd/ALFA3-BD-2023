@@ -9,6 +9,14 @@ urlpatterns = [
     path('home', views.home, name='gestor'),
     path('informacoes', views.informacoes, name='gestor'),
     path('escolas', views.escolas, name='gestor'),
+    path('cadastro_professores', views.cadastro_professores, name='gestor'),
+    path('submit_professores', views.submit_professores, name='gestor'),
+    path('professores', views.professores, name='gestor'),
+
+    path('cadastro_alunos', views.cadastro_alunos, name='gestor'),
+    path('submit_alunos', views.submit_alunos, name='gestor'),
+    path('alunos', views.alunos, name='gestor'),
+
     path('gestores_escolares', views.gestores_escolares, name='gestor'),
     path('resumo_coletas', views.resumo_coletas, name='gestor'),
 
