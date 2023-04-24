@@ -1,0 +1,11 @@
+run:
+	pyhthon manage.py runserver
+	
+configure: clean
+	python manage.py makemigrations escola
+	python manage.py migrate
+	python manage.py createsuperuser --email admin@logistica.local --username admin
+
+clean: 
+	rm -rf ./escola/migrations
+	# rm -f db.sqlite3
