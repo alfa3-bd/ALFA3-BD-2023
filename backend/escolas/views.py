@@ -3,25 +3,33 @@ from django.utils import timezone
 from rest_framework import viewsets
 from rest_framework.response import Response
 
-from escolas import serializers
 from escolas import models
-from escolas.serializers import (ContratoSerializer, UnidadeEscolarSerializer,
-                                 UserSerializer)
+from escolas import serializers
 
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = serializers.UserSerializer
 
 
 class UnidadeEscolar(viewsets.ModelViewSet):
     queryset = models.UnidadeEscolar.objects.all()
-    serializer_class = UnidadeEscolarSerializer
+    serializer_class = serializers.UnidadeEscolarSerializer
 
 
 class Contrato(viewsets.ModelViewSet):
     queryset = models.Contrato.objects.all()
-    serializer_class = ContratoSerializer
+    serializer_class = serializers.ContratoSerializer
+
+
+class Node(viewsets.ModelViewSet):
+    queryset = models.Node.objects.all()
+    serializer_class = serializers.NodeSerializer
+
+
+class Infraestrutura(viewsets.ModelViewSet):
+    queryset = models.Infraestrutura.objects.all()
+    serializer_class = serializers.NodeSerializer
 
 
 class Relatorio(viewsets.ViewSet):

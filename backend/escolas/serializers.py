@@ -1,9 +1,7 @@
 # Serializers define the API representation.
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from escolas.models import (
-    Contrato, UnidadeEscolar,
-)
+from escolas import models
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -14,7 +12,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
 class UnidadeEscolarSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = UnidadeEscolar
+        model = models.UnidadeEscolar
         fields = [
             'codigo_inep', 'nome', 'unidade_federacao', 'municipio', 'cep',
             'endereco', 'categoria_administrativa',
@@ -24,7 +22,7 @@ class UnidadeEscolarSerializer(serializers.HyperlinkedModelSerializer):
 
 class ContratoSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = Contrato
+        model = models.Contrato
         fields = [
             'unidade_escolar', 'infraestrutura',
             'data_inicio', 'data_fim', 'tipo',
@@ -77,3 +75,19 @@ class ObjectSerializer(serializers.BaseSerializer):
     def is_valid(self):
         self.data = self.initial_data
         return True
+
+
+class InfraestruturaSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = models.Infraestrutura
+        fields = [
+            'nome_cluster', 'nivel_governamental', 'nome_provedor',
+        ]
+
+
+class NodeSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = models.Node
+        fields = [
+            'node_ip', 'node_port',
+        ]
