@@ -17,13 +17,14 @@ Including another URLconf
 from django.urls import include, path
 from rest_framework import routers
 
-from escolas.views import Contrato, UnidadeEscolar, UserViewSet
+from escolas import views
 
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
-router.register(r'users', UserViewSet)
-router.register(r'unidades_escolares', UnidadeEscolar)
-router.register(r'contratos', Contrato)
+router.register(r'users', views.UserViewSet)
+router.register(r'unidades_escolares', views.UnidadeEscolar)
+router.register(r'contratos', views.Contrato)
+router.register(r'relatorios', views.Relatorio, basename='relatorios')
 
 urlpatterns = [
     path('', include(router.urls)),
