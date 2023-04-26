@@ -24,6 +24,8 @@ router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
 router.register(r'unidades_escolares', views.UnidadeEscolar)
 router.register(r'contratos', views.Contrato)
+router.register(r'intraestrutura', views.Infraestrutura)
+router.register(r'node', views.Node)
 router.register(r'relatorios', views.Relatorio, basename='relatorios')
 
 urlpatterns = [

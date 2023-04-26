@@ -29,7 +29,7 @@ class Node(viewsets.ModelViewSet):
 
 class Infraestrutura(viewsets.ModelViewSet):
     queryset = models.Infraestrutura.objects.all()
-    serializer_class = serializers.NodeSerializer
+    serializer_class = serializers.InfraestruturaSerializer
 
 
 class Relatorio(viewsets.ViewSet):
