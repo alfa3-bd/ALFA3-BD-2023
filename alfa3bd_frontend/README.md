@@ -24,7 +24,14 @@ See [Vite Configuration Reference](https://vitejs.dev/config/).
 ## Project Setup
 
 ```sh
+npm install --save apexcharts
+npm install --save vue3-apexcharts
+
+cd alfa3bd_frontend
 npm install
+npm run dev
+
+
 ```
 
 ### Compile and Hot-Reload for Development
@@ -43,4 +50,10 @@ npm run build
 
 ```sh
 npm run lint
+
 ```
+
+### Referencias das tecnologias
+
+VUE3: https://vuejs.org/
+APEXCHARTS: https://github.com/apexcharts/vue3-apexcharts
