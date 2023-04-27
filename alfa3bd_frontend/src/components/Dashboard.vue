@@ -2,12 +2,9 @@
 import axios from 'axios'
 export default {
 
-  data: function () {
+  data() {
     return {
-      data: {
-        series!: any,
-      },
-      series: [1,2],
+      series: null,
       chartOptions: {
         labels: ['Com Infraestrutura', 'Sem Infraestrutura']
       },
@@ -15,9 +12,10 @@ export default {
   },
 
   mounted(): void {
-      axios.get('http://localhost:8000/relatorios/').then((response: any) => {
-        this.data.series = [response.escolas_com_infra, response.escolas_sem_infra]
-        console.log(response.data)
+      axios.get('http://localhost:8000/relatorios/')
+      .then((response: any) => {
+        this.series = response.data[0].unidades_apoiadas
+        console.log(this.series)
       })
   },
 }
@@ -28,7 +26,7 @@ export default {
     <h1>Unidades com Infraestrutura ALFA3BD</h1>
     <apexchart width="600" type="pie" 
       :options="chartOptions" 
-      :series=[data.escolas_com_infra, data.escolas_sem_infra]>
+      :series="series">
     </apexchart>
   </div>
 </template>

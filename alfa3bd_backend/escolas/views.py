@@ -45,10 +45,8 @@ class Relatorio(viewsets.ViewSet):
         escolas_sem_infra = total_escolas - escolas_com_infra
 
         escola_infraestrutura = {
-            'nome': 'escolas_atendidas',
-            'escolas_sem_infra': escolas_sem_infra,
-            'escolas_com_infra': escolas_com_infra
-        }
+            "unidades_apoiadas": [escolas_sem_infra, escolas_com_infra],
+            }
 
         list_relatorio = [escola_infraestrutura]
 
