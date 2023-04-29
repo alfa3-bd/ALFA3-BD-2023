@@ -55,5 +55,5 @@ npm run lint
 
 ### Referencias das tecnologias
 
-VUE3: https://vuejs.org/
-APEXCHARTS: https://github.com/apexcharts/vue3-apexcharts
+- VUE3: https://vuejs.org/
+- APEXCHARTS: https://github.com/apexcharts/vue3-apexcharts

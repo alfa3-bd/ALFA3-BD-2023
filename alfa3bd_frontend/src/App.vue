@@ -1,23 +1,20 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import Dashboard from './components/Dashboard.vue'
-
-
 </script>
 
 <template>
   <header>
-    <nav>
+    <div class="topnav">
       <RouterLink to="/">Home</RouterLink>
+      <RouterLink to="/dashboard">Dashboard</RouterLink>
       <RouterLink to="/about">About</RouterLink>
-    </nav>
+    </div>
     <div class="wrapper">
-      <Dashboard />
-
+      <RouterView />
     </div>
   </header>
 
-  <RouterView />
 </template>
 
 <style scoped>
@@ -26,56 +23,46 @@ header {
   max-height: 100vh;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
 @media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
 
   header .wrapper {
     display: flex;
     place-items: flex-start;
     flex-wrap: wrap;
   }
+}
 
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
+/* Add a black background color to the top navigation */
+.topnav {
+  background-color: #333;
+  overflow: hidden;
 
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
+  /* position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999; */
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+  background-color: #04aa6d;
+  color: white;
 }
 </style>
