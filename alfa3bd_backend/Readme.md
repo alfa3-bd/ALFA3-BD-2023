@@ -29,7 +29,7 @@ Rota: localhost:8000
 Para consumir a api utilize a aplicação do frontend (alfabd3_frontend)
 
 # Referencias do projeto backend
-https://www.django-rest-framework.org
-https://www.mongodb.com/compatibility/mongodb-and-django
-https://sourcery.blog/how-to-build-api-with-django-rest-framework-and-mongodb/
-https://www.howtogeek.com/devops/how-to-run-mongodb-in-a-docker-container/
+- https://www.django-rest-framework.org
+- https://www.mongodb.com/compatibility/mongodb-and-django
+- https://sourcery.blog/how-to-build-api-with-django-rest-framework-and-mongodb/
+- https://www.howtogeek.com/devops/how-to-run-mongodb-in-a-docker-container/
