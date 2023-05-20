@@ -1,0 +1,59 @@
+{% extends "gestor/base/base.html" %}
+
+{% block title %} Professores {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+            <div class="page-wrapper">
+                <!-- [ Main Content ] start -->
+                <div class="d-flex justify-content-center">
+                    <!-- [ basic-table ] start -->
+                    <div class="col-xl-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Professores</h5>
+                            </div>
+                            <div class="card-block table-border-style">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Identificador</th>
+                                                <th>Nome</th>
+                                                <th>Sobrenome</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for professor in professores %}
+                                                <tr>
+                                                    <th scope="row">{{ professor.identificador }}</th>
+                                                    <td>{{ professor.nome }}</td>
+                                                    <td>{{ professor.sobrenome }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <a href="/gestor/cadastro_professores" style="background-color: #3D5482; border: none;width:200px;margin:auto;margin-bottom:10px;" class="btn btn-sm btn-primary">Cadastrar Novo Professor</a>
+                        </div>
+                    </div>
+                    <!-- [ basic-table ] end -->
+                </div>
+                <!-- [ Main Content ] end -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
