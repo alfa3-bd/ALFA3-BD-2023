@@ -1,27 +1,27 @@
 import psycopg2
 import os
 from dotenv import load_dotenv
+import json
+
 
 class ScriptsPostgreSQL:
     def __init__(self) -> None:
-
         super().__init__()
 
         load_dotenv()
 
         self.conn = psycopg2.connect(
-            host = os.getenv('DB_PG_HOST_NAME'),
-            dbname = os.getenv('DB_PG_NAME'),
-            user = os.getenv('BD_PG_USER_NAME'),
-            password = os.getenv('DB_PG_PASSWORD'),
-            port = os.getenv('DB_PG_PORT')
+            host=os.getenv("DB_PG_HOST_NAME"),
+            dbname=os.getenv("DB_PG_NAME"),
+            user=os.getenv("BD_PG_USER_NAME"),
+            password=os.getenv("DB_PG_PASSWORD"),
+            port=os.getenv("DB_PG_PORT"),
         )
 
-    def get_script_sql(self, file_name:str)->None:
+    def get_script_sql(self, file_name: str) -> None:
+        root_path = "models"
 
-        root_path = 'models'
-
-        f = open('/'.join(["dataset", root_path, file_name]), 'rb')
+        f = open("/".join(["dataset", root_path, file_name]), "rb")
 
         script_sql = f.read()
 
@@ -29,12 +29,11 @@ class ScriptsPostgreSQL:
 
         return script_sql
 
-    def close_connection(self)->None:
+    def close_connection(self) -> None:
         if self.conn is not None:
             self.conn.close()
 
-    def set_tables_in_db(self, file_name:str)->None:
-
+    def set_tables_in_db(self, file_name: str) -> None:
         script_sql = self.get_script_sql(file_name)
 
         try:
@@ -48,29 +47,29 @@ class ScriptsPostgreSQL:
             if cursor is not None:
                 cursor.close()
 
-    def delete_all_data(self)->None:
+    def delete_all_data(self) -> None:
         try:
             cursor = self.conn.cursor()
-            cursor.execute('DELETE FROM CONTRATO')
-            cursor.execute('TRUNCATE TABLE CONTRATO RESTART IDENTITY CASCADE')
-            cursor.execute('DELETE FROM NODE')
-            cursor.execute('TRUNCATE TABLE NODE RESTART IDENTITY CASCADE')
-            cursor.execute('DELETE FROM INFRAESTRUTURA')
-            cursor.execute('TRUNCATE TABLE INFRAESTRUTURA RESTART IDENTITY CASCADE')
-            cursor.execute('DELETE FROM UNIDADE_ESCOLAR')
-            cursor.execute('TRUNCATE TABLE UNIDADE_ESCOLAR RESTART IDENTITY CASCADE')
+            cursor.execute("DELETE FROM CONTRATO")
+            cursor.execute("TRUNCATE TABLE CONTRATO RESTART IDENTITY CASCADE")
+            cursor.execute("DELETE FROM NODE")
+            cursor.execute("TRUNCATE TABLE NODE RESTART IDENTITY CASCADE")
+            cursor.execute("DELETE FROM INFRAESTRUTURA")
+            cursor.execute("TRUNCATE TABLE INFRAESTRUTURA RESTART IDENTITY CASCADE")
+            cursor.execute("DELETE FROM UNIDADE_ESCOLAR")
+            cursor.execute("TRUNCATE TABLE UNIDADE_ESCOLAR RESTART IDENTITY CASCADE")
 
-            cursor.execute('DELETE FROM COLETA')
-            cursor.execute('TRUNCATE TABLE COLETA RESTART IDENTITY CASCADE')
-            cursor.execute('DELETE FROM ALUNO')
-            cursor.execute('TRUNCATE TABLE ALUNO RESTART IDENTITY CASCADE')
-            cursor.execute('DELETE FROM PROFESSOR')
-            cursor.execute('TRUNCATE TABLE PROFESSOR RESTART IDENTITY CASCADE')
+            cursor.execute("DELETE FROM COLETA")
+            cursor.execute("TRUNCATE TABLE COLETA RESTART IDENTITY CASCADE")
+            cursor.execute("DELETE FROM ALUNO")
+            cursor.execute("TRUNCATE TABLE ALUNO RESTART IDENTITY CASCADE")
+            cursor.execute("DELETE FROM PROFESSOR")
+            cursor.execute("TRUNCATE TABLE PROFESSOR RESTART IDENTITY CASCADE")
             self.conn.commit()
         except Exception as e:
             print(e)
 
-    def see_n_first_rows_from(self, table_name:str, n=100)->None:
+    def see_n_first_rows_from(self, table_name: str, n=100) -> None:
         try:
             cursor = self.conn.cursor()
             cursor.execute("SELECT * FROM {} limit {}".format(table_name, n))
@@ -82,3 +81,36 @@ class ScriptsPostgreSQL:
 
         except Exception as e:
             print(e)
+
+    def get_table_data_count(self, table_name: str) -> int:
+        try:
+            cursor = self.conn.cursor()
+
+            cursor.execute(f"SELECT COUNT(*) FROM {table_name}")
+
+            count = cursor.fetchone()[0]
+
+            return count
+
+        except Exception as e:
+            print(e)
+            return 0
+
+    def save_data(self, table_name, data):
+        try:
+            cursor = self.conn.cursor()
+
+            # Insira os dados na tabela especificada
+            cursor.execute(f"INSERT INTO {table_name} VALUES %s", (json.dumps(data),))
+
+            # Faça o commit da transação
+            self.conn.commit()
+
+            print(f"Dados inseridos na tabela {table_name} com sucesso!")
+
+        except Exception as e:
+            print(f"Erro ao inserir dados na tabela {table_name}:", e)
+
+        finally:
+            if cursor is not None:
+                cursor.close()

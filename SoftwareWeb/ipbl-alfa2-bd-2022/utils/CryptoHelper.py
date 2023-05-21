@@ -1,6 +1,7 @@
 from cryptography.fernet import Fernet
 import secrets
 
+
 class CryptoHelper:
     def __init__(self) -> None:
         super().__init__()

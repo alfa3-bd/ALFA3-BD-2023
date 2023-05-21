@@ -1,5 +1,5 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2022-05-30 03:58:01.645
+-- Last modification date: 2023-05-18 03:58:01.645
 
 -- tables
 -- Table: ALUNO
@@ -7,9 +7,17 @@ CREATE TABLE ALUNO (
     alu_id serial  NOT NULL,
     alu_primeiro_nome varchar(255)  NOT NULL,
     alu_segundo_nome varchar(255)  NOT NULL,
-    alu_tipo varchar(256)  NOT NULL,
+    alu_data_nascimento date NOT NULL,
+    tip_alu serial NOT NULL,
     tur_id serial  NOT NULL,
     CONSTRAINT ALUNO_pk PRIMARY KEY (alu_id)
+);
+
+-- Table: TIPO_ALUNO
+CREATE TABLE TIPO_ALUNO (
+    "tip_alu_id" INTEGER NOT NULL DEFAULT nextval('tipo_aluno_tip_alu_id_seq'),
+    "tip_alu_desc" VARCHAR NOT NULL,
+    PRIMARY KEY ("tip_alu_id")
 );
 
 -- Table: AVALIACAO
@@ -17,6 +25,7 @@ CREATE TABLE AVALIACAO (
     ava_id serial  NOT NULL,
     ava_tipo varchar(256)  NOT NULL,
     ava_data timestamp  NOT NULL,
+    ava_nota numeric(10, 2),
     alu_id serial  NOT NULL,
     pro_id serial  NOT NULL,
     CONSTRAINT AVALIACAO_pk PRIMARY KEY (ava_id)
@@ -25,7 +34,7 @@ CREATE TABLE AVALIACAO (
 -- Table: COLETA
 CREATE TABLE COLETA (
     col_id serial  NOT NULL,
-    col_audio mp3  NOT NULL,
+    col_audio varchar(256)  NOT NULL,
     col_metrica real  NOT NULL,
     fra_id serial  NOT NULL,
     ava_id serial  NOT NULL,
@@ -35,11 +44,10 @@ CREATE TABLE COLETA (
 -- Table: CONTRATO
 CREATE TABLE CONTRATO (
     con_id serial  NOT NULL,
-    uni_id serial  NOT NULL,
-    inf_id serial  NOT NULL,
     con_data_ini date  NOT NULL,
     con_data_fim date  NOT NULL,
     con_tipo int  NOT NULL,
+    uni_id serial  NOT NULL,
     CONSTRAINT CONTRATO_pk PRIMARY KEY (con_id)
 );
 
@@ -96,10 +104,6 @@ CREATE TABLE UNIDADE_ESCOLAR (
     uni_id serial  NOT NULL,
     uni_codigo_inep int  NOT NULL,
     uni_nome varchar(255)  NOT NULL,
-    uni_uf char(2)  NOT NULL,
-    uni_cep char(9)  NOT NULL,
-    uni_endereco varchar(255)  NOT NULL,
-    uni_municipio varchar(50)  NOT NULL,
     uni_categ_admin int  NOT NULL,
     uni_depen_admin int  NOT NULL,
     ges_id int  NOT NULL,
@@ -115,7 +119,7 @@ CREATE TABLE ENDERECO (
     end_cep varchar(9)  NOT NULL,
     cid_id int  NOT NULL,
     CONSTRAINT ENDERECO_pk PRIMARY KEY (end_id)
-)
+);
 
 CREATE TABLE CIDADE (
     cid_id serial  NOT NULL,
@@ -123,13 +127,20 @@ CREATE TABLE CIDADE (
     cid_uf varchar(2)  NOT NULL,
     cid_pais varchar(50)  NOT NULL,
     CONSTRAINT CIDADE_pk PRIMARY KEY (cid_id)
-)
+);
 
 -- foreign keys
 -- Reference: ALUNO_Turma (table: ALUNO)
 ALTER TABLE ALUNO ADD CONSTRAINT ALUNO_Turma
     FOREIGN KEY (tur_id)
-    REFERENCES TURMA (tur_id)  
+    REFERENCES tipo_aluno (tur_id)  
+    NOT DEFERRABLE 
+    INITIALLY IMMEDIATE
+;
+
+ALTER TABLE ALUNO ADD CONSTRAINT ALUNO_Tipo
+    FOREIGN KEY (tip_alu)
+    REFERENCES TIPO_ALUNO (tip_alu_id)  
     NOT DEFERRABLE 
     INITIALLY IMMEDIATE
 ;
@@ -222,6 +233,3 @@ ALTER TABLE ENDERECO ADD CONSTRAINT ENDERECO_CIDADE
 ;
 
 -- End of file.
-
-
-

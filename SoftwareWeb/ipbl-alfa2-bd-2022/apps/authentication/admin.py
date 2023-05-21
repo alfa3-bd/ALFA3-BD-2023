@@ -10,18 +10,20 @@ from django.contrib import admin
 
 from .models import *
 
+
 @admin.register(InfraEstrutura)
 class AdminViewInfraEstrutura(admin.ModelAdmin):
     search_fields = [
-        'inf_nome_provedor',
-        'inf_nivel_gov',
-        'inf_nome_cluster',
+        "inf_nome_provedor",
+        "inf_nivel_gov",
+        "inf_nome_cluster",
     ]
     list_display = [
-        'inf_nome_provedor',
-        'inf_nivel_gov',
-        'inf_nome_cluster',
+        "inf_nome_provedor",
+        "inf_nivel_gov",
+        "inf_nome_cluster",
     ]
+
 
 admin.site.register(Node)
 admin.site.register(UnidadeEscolar)
