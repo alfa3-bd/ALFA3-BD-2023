@@ -1,4 +1,4 @@
-from xxlimited import Null
+#from xxlimited import Null
 from django import template
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
@@ -8,498 +8,281 @@ from dataset.ScriptsMongoDB import ScriptsMongoDB
 from utils.DictHelper import DictHelper
 from utils.CryptoHelper import CryptoHelper
 from bson.objectid import ObjectId
+import datetime
 import json
 from random import randint
+import core.models
 
-
+#Login
 def login(request):
-    context = {"segment": "login"}
-    html_template = loader.get_template("gestor/screens/login.html")
+    context = {'segment': 'login'}
+    html_template = loader.get_template('gestor/screens/login.html')
     return HttpResponse(html_template.render(context, request))
 
-
 def logoff(request):
-    response = HttpResponseRedirect("/")
-    response.delete_cookie("identificador_gestor")
+    response = HttpResponseRedirect('/')
+    response.delete_cookie('identificador_gestor')
 
     return response
 
-
 def verify_login(request):
+
     crypto = CryptoHelper()
 
-    if request.POST:
-        scripts_mongodb = ScriptsMongoDB()
+    context = {
+        'segment': 'login',
+        'err':''
+    }
+
+    if len(request.POST['identificador_gestor']):
 
         data = request.POST
-        identificador_professor = data["identificador_gestor"]
-        senha_gestor = data["senha_gestor"]
+        gestor = core.models.GestorEscola.objects.get(ges_identificador = data['identificador_gestor'])
 
-        gestores = scripts_mongodb.get_data_find(
-            collection_name="gestores",
-            filter={"identificador": identificador_professor},
-        )
+        print(gestor.ges_identificador)
+        print(crypto.decrypt_message(gestor.ges_senha))
 
-        scripts_mongodb.close_connection()
+        if len(gestor.ges_identificador) and (crypto.decrypt_message(gestor.ges_senha) == data['senha_gestor']):
 
-        if len(gestores):
-            gestor = gestores[0]
+            context = {
+                'segment': 'home',
+                'err':''
+            }
 
-            # if senha_gestor == crypto.decrypt_message(gestor['hash_senha']):
-            if True:
-                context = {"segment": "home", "err": ""}
+            response = redirect('/gestor/home', context)
+            response.set_cookie('identificador_gestor', gestor.ges_identificador)
+            return response
 
-                response = redirect("/gestor/home", context)
-
-                response.set_cookie("identificador_gestor", gestor["identificador"])
-
-                return response
-
-    context = {"segment": "login", "err": ""}
-
-    return redirect("/gestor/login", context)
-
+    return redirect('/gestor/login', context)
 
 def home(request):
-    context = {"segment": "home"}
 
-    identificador = request.COOKIES.get("identificador_gestor")
+    context = {
+        'segment': 'home'
+    }
+
+    identificador = request.COOKIES.get('identificador_gestor')
 
     if identificador is not None:
-        html_template = loader.get_template("gestor/screens/home.html")
+
+        html_template = loader.get_template('gestor/screens/home.html')
 
         response = HttpResponse(html_template.render(context, request))
-        response.set_cookie("identificador_gestor", identificador)
+        response.set_cookie('identificador_gestor', identificador)
 
         return HttpResponse(html_template.render(context, request))
 
     else:
-        context = {"segment": "login", "err": ""}
+        context = {
+            'segment': 'login',
+            'err':''
+        }
 
-        return redirect("/gestor/login", context)
-
+        return redirect('/gestor/login', context)
 
 def informacoes(request):
-    identificador = request.COOKIES.get("identificador_gestor")
 
-    scripts_mongodb = ScriptsMongoDB()
+    identificador = request.COOKIES.get('identificador_gestor')
 
-    gestor = scripts_mongodb.get_data_find(
-        collection_name="gestores", filter={"identificador": identificador}
-    )[0]
-
-    scripts_mongodb.close_connection()
+    gestor = core.models.GestorEscola.objects.get(ges_identificador = identificador)
 
     context = {
-        "segment": "informacoes",
-        "gestor": gestor,
+        'segment': 'informacoes',
+        'gestor': gestor,
     }
 
-    html_template = loader.get_template("gestor/screens/informacoes.html")
-
+    html_template = loader.get_template('gestor/screens/informacoes.html')
     response = HttpResponse(html_template.render(context, request))
-
-    response.set_cookie("identificador_gestor", identificador)
+    response.set_cookie('identificador_gestor', identificador)
 
     return response
 
-
-def escolas(request):
-    identificador = request.COOKIES.get("identificador_gestor")
-
-    scripts_mongodb = ScriptsMongoDB()
-
-    escolas_query = scripts_mongodb.get_data_find(
-        collection_name="gestores", filter={"identificador": identificador}
-    )[0]["escolas"]
-
-    escolas = []
-    for escola in escolas_query:
-        escola_query = scripts_mongodb.get_object_by_id(
-            collection_name="escolas", _id=escola
-        )
-        escolas.append(escola_query)
-
-    scripts_mongodb.close_connection()
-    escolas_federais = []
-    escolas_estaduais = []
-    escolas_municipais = []
-    for escola in escolas:
-        escola["id"] = escola["_id"]
-        if escola["depen_admin"] == 1:
-            escolas_federais.append(escola)
-        elif escola["depen_admin"] == 2:
-            escolas_estaduais.append(escola)
-        elif escola["depen_admin"] == 3:
-            escolas_municipais.append(escola)
-    context = {
-        "segment": "escolas",
-        "escolas_federais": escolas_federais,
-        "escolas_estaduais": escolas_estaduais,
-        "escolas_municipais": escolas_municipais,
-        "escolas": escolas,
-    }
-    html_template = loader.get_template("gestor/screens/escolas.html")
-    response = HttpResponse(html_template.render(context, request))
-    response.set_cookie("identificador_gestor", identificador)
-
-    return response
-
-
+# Professores
 def professores(request):
-    identificador = request.COOKIES.get("identificador_gestor")
 
-    scripts_mongodb = ScriptsMongoDB()
+    identificador = request.COOKIES.get('identificador_gestor')
 
-    professores_query = scripts_mongodb.get_data_find(
-        collection_name="professores", filter={}
-    )
-
-    professores = []
-    for professor in professores_query:
-        professores.append(professor)
-
-    scripts_mongodb.close_connection()
+    professores = core.models.Professor.objects.raw("SELECT p.pro_id, p.pro_primeiro_nome, "+
+    "p.pro_segundo_nome, string_agg(CONCAT('Ano: ',tur_ano,' Serie: ', tur_ano_escolar), ', ') AS turmas "+
+    "FROM professor AS p LEFT JOIN turma AS t ON t.pro_id = p.pro_id GROUP BY p.pro_id ORDER BY p.pro_id");
 
     context = {
-        "segment": "professores",
-        "professores": professores,
+        'segment': 'professores',
+        'professores': professores,
     }
 
-    html_template = loader.get_template("gestor/screens/professores.html")
+    html_template = loader.get_template('gestor/screens/professores.html')
     response = HttpResponse(html_template.render(context, request))
-    response.set_cookie("identificador_gestor", identificador)
+    response.set_cookie('identificador_gestor', identificador)
 
     return response
 
+def add_professores(request):
 
-def cadastro_professores(request):
-    context = {"segment": "professores", "err": ""}
-
-    html_template = loader.get_template("gestor/screens/cadastro_professores.html")
+    context = {
+        'segment': 'professores',
+        'err':''
+    }
+     
+    html_template = loader.get_template('gestor/screens/add_professores.html')
     response = HttpResponse(html_template.render(context, request))
     return response
 
+def edit_professores(request,id):
 
-def submit_professores(request):
+    crypto = CryptoHelper()
+    
+    professor = core.models.Professor.objects.get(pro_id = id)
+    professor.pro_senha = crypto.decrypt_message(professor.pro_senha)
+
+    context = {
+        'segment': 'professores',
+        'professor': professor,
+    }
+
+    html_template = loader.get_template('gestor/screens/edit_professores.html')
+    response = HttpResponse(html_template.render(context, request))
+
+    return response
+
+def save_professores(request):
+
     crypto = CryptoHelper()
 
-    context = {"segment": "professores", "err": ""}
+    context = {
+        'segment': 'professores',
+        'err':''
+    }
 
-    scripts_mongodb = ScriptsMongoDB()
-    id = scripts_mongodb.create_id()
+    if 'id_prof' in request.POST:
+        professor = core.models.Professor.objects.get(pro_id = request.POST["id_prof"])
+        professor.pro_primeiro_nome = request.POST["fst_name_prof"]
+        professor.pro_segundo_nome = request.POST["scn_name_prof"]
+        professor.pro_identificador = request.POST["cpf"]
+        professor.pro_senha = crypto.encrypt_message(request.POST["password"])
+        professor.save()
+    
+    else:
+        core.models.Professor.objects.create(pro_primeiro_nome=request.POST["fst_name_prof"],
+                                        pro_segundo_nome = request.POST["scn_name_prof"],
+                                        pro_identificador = request.POST["cpf"],
+                                        pro_senha = crypto.encrypt_message(request.POST["password"]))
 
-    scripts_mongodb.insert_object(
-        collection_name="professores",
-        object={
-            "_id": id,
-            "identificador": request.POST["cpf"],
-            "nome": request.POST["fst_name_prof"],
-            "sobrenome": request.POST["scn_name_prof"],
-            "hash_senha": crypto.encrypt_message(request.POST["password"]),
-            "turma": [],
-        },
-    )
-
-    scripts_mongodb.close_connection()
-
-    response = redirect("/gestor/professores", context)
+    response = redirect('/gestor/professores', context)
 
     return response
 
+def delete_professores(request,id):
+    context = {
+        'segment': 'professores',
+        'err':''
+    }
 
+    professor = core.models.Professor.objects.get(pro_id = id)
+    professor.delete()
+
+    response = redirect('/gestor/professores', context)
+
+    return response
+
+# Alunos
 def alunos(request):
-    enum = {"1": "Normal", "2": "Especial", "3": "Superdotado"}
 
-    scripts_mongodb = ScriptsMongoDB()
-
-    alunos_query = scripts_mongodb.get_data_find(collection_name="alunos", filter={})
-
-    list_alunos = []
-
-    for aluno in alunos_query:
-        turma = scripts_mongodb.get_object_by_id(
-            collection_name="turmas", _id=aluno["turma"]
-        )
-        aluno["turma"] = turma
-        aluno["tipo"] = enum.get(str(aluno["tipo"]))
-        list_alunos.append(aluno)
-
-    scripts_mongodb.close_connection()
+    alunos = core.models.Aluno.objects.all().select_related().order_by('alu_primeiro_nome')
 
     context = {
-        "segment": "alunos",
-        "alunos": list_alunos,
+        'segment': 'alunos',
+        'alunos': alunos,
     }
 
-    html_template = loader.get_template("gestor/screens/alunos.html")
+    html_template = loader.get_template('gestor/screens/alunos.html')
     response = HttpResponse(html_template.render(context, request))
 
     return response
 
+def add_alunos(request):
 
-def cadastro_alunos(request):
-    scripts_mongodb = ScriptsMongoDB()
-
-    turmas_query = scripts_mongodb.get_data_find(collection_name="turmas", filter={})
-
-    list_turmas = []
-
-    for turma in turmas_query:
-        turma["id"] = turma["_id"]
-        list_turmas.append(turma)
-
-    print(list_turmas)
-
-    context = {"segment": "alunos", "turmas": list_turmas}
-
-    html_template = loader.get_template("gestor/screens/cadastro_alunos.html")
-    response = HttpResponse(html_template.render(context, request))
-    return response
-
-
-def submit_alunos(request):
-    context = {"segment": "alunos", "err": ""}
-
-    scripts_mongodb = ScriptsMongoDB()
-    id = scripts_mongodb.create_id()
-
-    scripts_mongodb.insert_object(
-        collection_name="alunos",
-        object={
-            "_id": id,
-            "nome": request.POST["fst_name_aluno"],
-            "sobrenome": request.POST["scn_name_aluno"],
-            "turma": request.POST["turma"],
-            "tipo": request.POST["tipo"],
-        },
-    )
-
-    scripts_mongodb.close_connection()
-
-    response = redirect("/gestor/alunos", context)
-
-    return response
-
-
-def gestores_escolares(request):
-    identificador = request.COOKIES.get("identificador_gestor")
-
-    scripts_mongodb = ScriptsMongoDB()
-
-    escolas_query = scripts_mongodb.get_data_find(
-        collection_name="gestores", filter={"identificador": identificador}
-    )[0]["escolas"]
-
-    aux_escolas = []
-
-    escolas = []
-    labels_chart = []
-    data_chart = []
-    total_turmas = 0
-
-    for escola in escolas_query:
-        escola_query = scripts_mongodb.get_object_by_id(
-            collection_name="escolas", _id=escola
-        )
-        aux_escolas.append(escola_query)
-
-    for escola in aux_escolas:
-        labels_chart.append(escola["nome"])
-        data_chart.append(len(escola["turmas"]))
-        escolas.append({"nome": escola["nome"], "quantidade": len(escola["turmas"])})
-        total_turmas += len(escola["turmas"])
-
-    scripts_mongodb.close_connection()
+    turmas = core.models.Turma.objects.all()
+    tipo_alunos = core.models.TipoAluno.objects.all()
 
     context = {
-        "segment": "gestores_escolares",
-        "escolas": escolas,
-        "total_turmas": total_turmas,
-        "labels_chart": labels_chart[:5],
-        "data_chart": data_chart[:5],
+        'segment': 'alunos',
+        'turmas':turmas,
+        'tipo_alunos':tipo_alunos,
     }
 
-    html_template = loader.get_template("gestor/screens/gestores_escolares.html")
+    html_template = loader.get_template('gestor/screens/add_alunos.html')
     response = HttpResponse(html_template.render(context, request))
-    response.set_cookie("identificador_gestor", identificador)
+    return response
+
+def edit_alunos(request,id):
+
+    aluno = core.models.Aluno.objects.get(alu_id = id)
+    turmas = core.models.Turma.objects.all()
+    tipo_alunos = core.models.TipoAluno.objects.all()
+    
+    context = {
+        'segment': 'alunos',
+        'aluno': aluno,
+        'turmas':turmas,
+        'tipo_alunos':tipo_alunos,
+    }
+
+    html_template = loader.get_template('gestor/screens/edit_alunos.html')
+    response = HttpResponse(html_template.render(context, request))
 
     return response
 
-
-def resumo_coletas(request):
-    identificador = request.COOKIES.get("identificador_gestor")
-
-    scripts_mongodb = ScriptsMongoDB()
-
-    escolas_query = scripts_mongodb.get_data_find(
-        collection_name="gestores", filter={"identificador": identificador}
-    )[0]["escolas"]
-
-    list_alunos = []
-    escolas = []
-
-    for escola_id in escolas_query:
-        escola = scripts_mongodb.get_object_by_id(
-            collection_name="escolas", _id=escola_id
-        )
-        escola_aux = {"nome": escola["nome"], "alunos": []}
-        for turma_id in escola["turmas"]:
-            turma = scripts_mongodb.get_object_by_id(
-                collection_name="turmas", _id=turma_id
-            )
-            escola_aux["alunos"] = escola_aux["alunos"] + turma["alunos"]
-            list_alunos = list_alunos + turma["alunos"]
-        escolas.append(escola_aux)
-
-    avaliacoes = {}
-
-    for aluno in list_alunos:
-        avaliacoes[aluno] = scripts_mongodb.get_data_find(
-            collection_name="alunos", filter={"_id": aluno}
-        )[0]["avaliacao"]
-
-    list_avaliacoes = {}
-    for key in avaliacoes:
-        list_avaliacoes[avaliacoes[key]] = scripts_mongodb.get_data_find(
-            collection_name="avaliacoes", filter={"_id": avaliacoes[key]}
-        )[0]
-    scripts_mongodb.close_connection()
-
-    escolas_name_label = []
-    mean_av1 = []
-    mean_av2 = []
-    mean_av3 = []
-
-    for escola in escolas:
-        escolas_name_label.append(escola["nome"])
-        av1 = 0
-        cont1 = 0
-        av2 = 0
-        cont2 = 0
-        av3 = 0
-        cont3 = 0
-        for aluno in escola["alunos"]:
-            avaliacao_id = avaliacoes[aluno]
-            avaliacao = list_avaliacoes[avaliacao_id]["avaliacoes"]
-            for coleta in avaliacao[0]["coleta"]:
-                if coleta["metrica"] != None:
-                    av1 += coleta["metrica"]
-                    cont1 += 1
-            for coleta in avaliacao[1]["coleta"]:
-                if coleta["metrica"] != None:
-                    av2 += coleta["metrica"]
-                    cont2 += 1
-            for coleta in avaliacao[2]["coleta"]:
-                if coleta["metrica"] != None:
-                    av3 += coleta["metrica"]
-                    cont3 += 1
-
-        if cont1 != 0:
-            mean_av1.append(av1 / cont1)
-        else:
-            mean_av1.append(0)
-        if cont2 != 0:
-            mean_av2.append(av2 / cont2)
-        else:
-            mean_av2.append(0)
-        if cont3 != 0:
-            mean_av3.append(av3 / cont3)
-        else:
-            mean_av3.append(0)
-        # teste={}[0]
+def save_alunos(request):
 
     context = {
-        "segment": "resumo_coletas",
-        "avaliacoes": list_avaliacoes,
-        "escolas_name_label": escolas_name_label,
-        "mean_av1": mean_av1,
-        "mean_av2": mean_av2,
-        "mean_av3": mean_av3,
+        'segment': 'alunos',
+        'err':''
     }
-    html_template = loader.get_template("gestor/screens/resumo_coletas.html")
-    response = HttpResponse(html_template.render(context, request))
-    response.set_cookie("identificador_gestor", identificador)
+
+    if 'id_aluno' in request.POST:
+        aluno = core.models.Aluno.objects.get(alu_id = request.POST["id_aluno"])
+        aluno.alu_primeiro_nome=request.POST["fst_name_aluno"]
+        aluno.alu_segundo_nome = request.POST["scn_name_aluno"]
+        aluno.alu_data_nascimento = datetime.datetime.strptime(str(request.POST["date_nasc_aluno"]),'%d/%m/%Y').strftime('%Y-%m-%d')
+        aluno.turma = core.models.Turma(tur_id = request.POST["turma"])
+        aluno.tipo = core.models.TipoAluno(tip_alu_id = request.POST["tipo"])
+        aluno.save()
+    
+    else:
+        core.models.Aluno.objects.create(alu_primeiro_nome=request.POST["fst_name_aluno"],
+                                        alu_segundo_nome = request.POST["scn_name_aluno"],
+                                        alu_data_nascimento = datetime.datetime.strptime(str(request.POST["date_nasc_aluno"]),'%d/%m/%Y').strftime('%Y-%m-%d'),
+                                        turma = core.models.Turma(tur_id = request.POST["turma"]),
+                                        tipo = core.models.TipoAluno(tip_alu_id = request.POST["tipo"]))
+    
+
+    response = redirect('/gestor/alunos', context)
 
     return response
 
+def delete_alunos(request,id):
+    context = {
+        'segment': 'alunos',
+        'err':''
+    }
 
-def cadastro_escolas(request):
-    identificador = request.COOKIES.get("identificador_gestor")
+    aluno = core.models.Aluno.objects.get(alu_id = id)
+    aluno.delete()
 
-    context = {}
-
-    html_template = loader.get_template("gestor/screens/cadastro_escolas.html")
-    response = HttpResponse(html_template.render(context, request))
-    response.set_cookie("identificador_gestor", identificador)
-
-    return response
-
-
-def cadastro_turma(request):
-    identificador = request.COOKIES.get("identificador_gestor")
-    id_escola = request.COOKIES.get("id_escola")
-
-    context = {}
-
-    html_template = loader.get_template("gestor/screens/cadastro_turma.html")
-    response = HttpResponse(html_template.render(context, request))
-    response.set_cookie("identificador_gestor", identificador)
-    response.set_cookie("id_escola", id_escola)
+    response = redirect('/gestor/alunos', context)
 
     return response
 
-
-def submit_turma(request):
-    context = {"segment": "escolas", "err": ""}
-
-    # data = request.POST
-    identificador = request.COOKIES.get("identificador_gestor")
-    id_escola = request.COOKIES.get("id_escola")
-
-    ano = request.POST["ano"]
-    nome_provedor = request.POST["nome_provedor"]
-    ano_escolar = request.POST["ano_escolar"]
-
-    scripts_mongodb = ScriptsMongoDB()
-
-    escola_query = scripts_mongodb.get_object_by_id(
-        collection_name="escolas", _id=id_escola
-    )
-
-    turmas = escola_query["turmas"]
-
-    result = scripts_mongodb.insert_object(
-        collection_name="turmas",
-        object={
-            "ano": ano,
-            "nome_provedor": nome_provedor,
-            "ano_escolar": ano_escolar,
-            "alunos": [],
-            "professor": None,
-        },
-    )
-
-    turmas.append(ObjectId(result["id"]))
-    # teste = {}[0]
-
-    scripts_mongodb.db["escolas"].update_one(
-        {"_id": ObjectId(id_escola)}, {"$set": {"turmas": turmas}}
-    )
-
-    scripts_mongodb.close_connection()
-
-    response = redirect("/gestor/escola_individual", context)
-    response.set_cookie("identificador_gestor", identificador)
-
-    return response
-
-
+#Escolas
 def submit_escola(request):
-    context = {"segment": "escolas", "err": ""}
+    context = {
+        'segment': 'escolas',
+        'err':''
+    }
 
     # data = request.POST
-    identificador = request.COOKIES.get("identificador_gestor")
+    identificador = request.COOKIES.get('identificador_gestor')
 
     nome_escola = request.POST["nome_escola"]
     codigo_inep = request.POST["codigo_inep"]
@@ -513,7 +296,8 @@ def submit_escola(request):
     scripts_mongodb = ScriptsMongoDB()
 
     gestor_query = scripts_mongodb.get_data_find(
-        collection_name="gestores", filter={"identificador": identificador}
+        collection_name='gestores',
+        filter = {'identificador': identificador}
     )[0]
 
     escolas = gestor_query["escolas"]
@@ -531,52 +315,310 @@ def submit_escola(request):
             "endereco": endereco,
             "hash_senha": "",
             "infraestruturas": [],
-            "turmas": [],
-        },
+            "turmas": []
+        }
     )
 
     # teste = {}[0]
     escolas.append(ObjectId(result["id"]))
 
-    scripts_mongodb.db["gestores"].update_one(
-        {"_id": gestor_query["_id"]}, {"$set": {"escolas": escolas}}
-    )
+    scripts_mongodb.db["gestores"].update_one({"_id": gestor_query["_id"]}, {"$set": {"escolas": escolas}})
 
     scripts_mongodb.close_connection()
 
-    response = redirect("/gestor/escolas", context)
-    response.set_cookie("identificador_gestor", identificador)
+    response = redirect('/gestor/escolas', context)
+    response.set_cookie('identificador_gestor', identificador)
 
     return response
 
+def escola_individual(request,id):
+    identificador = request.COOKIES.get('identificador_gestor')
 
-def escola_individual(request):
-    identificador = request.COOKIES.get("identificador_gestor")
-    try:
-        id_escola = request.POST["id"]
-    except:
-        id_escola = request.COOKIES.get("id_escola")
+    escola = core.models.UnidadeEscolar.objects.filter(uni_id = id).select_related('endereco')[0]
+    turmas = core.models.Turma.objects.filter(escola_id = id).select_related('professor')
+
+    context={
+        "escola": escola,
+        "turmas":turmas
+    }
+
+    html_template = loader.get_template('gestor/screens/escola_individual.html')
+    response = HttpResponse(html_template.render(context, request))
+    response.set_cookie('identificador_gestor', identificador)
+
+    return response
+
+def escolas(request):
+
+    identificador = request.COOKIES.get('identificador_gestor')
+
+    gestor = core.models.GestorEscola.objects.get(ges_identificador = identificador)
+
+    #escolas = core.models.UnidadeEscolar.objects.filter(gestor_id = gestor.ges_id).select_related()
+
+    #escolas_federais = core.models.UnidadeEscolar.objects.filter(gestor_id = gestor.ges_id,tipo_id = 1).select_related()
+
+    #escolas_estaduais = core.models.UnidadeEscolar.objects.filter(gestor_id = gestor.ges_id,tipo_id = 2).select_related()
+    
+    #escolas_municipais = core.models.UnidadeEscolar.objects.filter(gestor_id = gestor.ges_id,tipo_id = 3).select_related()
+
+    escolas = core.models.UnidadeEscolar.objects.all().select_related()
+
+    escolas_federais = core.models.UnidadeEscolar.objects.filter(tipo_id = 1).select_related()
+
+    escolas_estaduais = core.models.UnidadeEscolar.objects.filter(tipo_id = 2).select_related()
+    
+    escolas_municipais = core.models.UnidadeEscolar.objects.filter(tipo_id = 3).select_related()
+
+    print(str(escolas.query))
+
+    context = {
+        'segment': 'escolas',
+        'escolas_federais': escolas_federais,
+        'escolas_estaduais': escolas_estaduais,
+        'escolas_municipais': escolas_municipais,
+        'escolas': escolas,
+    }
+
+    html_template = loader.get_template('gestor/screens/escolas.html')
+    response = HttpResponse(html_template.render(context, request))
+    response.set_cookie('identificador_gestor', identificador)
+
+    return response
+
+def cadastro_escolas(request):
+    identificador = request.COOKIES.get('identificador_gestor')
+
+    context={}
+
+    html_template = loader.get_template('gestor/screens/cadastro_escolas.html')
+    response = HttpResponse(html_template.render(context, request))
+    response.set_cookie('identificador_gestor', identificador)
+
+    return response
+
+#Turma
+def cadastro_turma(request):
+    identificador = request.COOKIES.get('identificador_gestor')
+    id_escola = request.COOKIES.get('id_escola')
+
+    context={}
+
+    html_template = loader.get_template('gestor/screens/cadastro_turma.html')
+    response = HttpResponse(html_template.render(context, request))
+    response.set_cookie('identificador_gestor', identificador)
+    response.set_cookie('id_escola', id_escola)
+
+    return response
+
+def submit_turma(request):
+    context = {
+        'segment': 'escolas',
+        'err':''
+    }
+
+    # data = request.POST
+    identificador = request.COOKIES.get('identificador_gestor')
+    id_escola = request.COOKIES.get('id_escola')
+
+    ano = request.POST["ano"]
+    nome_provedor = request.POST["nome_provedor"]
+    ano_escolar = request.POST["ano_escolar"]
 
     scripts_mongodb = ScriptsMongoDB()
 
     escola_query = scripts_mongodb.get_object_by_id(
-        collection_name="escolas", _id=id_escola
+        collection_name='escolas',
+        _id=id_escola
     )
 
-    turmas_query = escola_query["turmas"]
-    escola_query["turmas"] = []
+    turmas = escola_query["turmas"]
 
-    for turma in turmas_query:
-        turma_ = scripts_mongodb.get_object_by_id(collection_name="turmas", _id=turma)
-        escola_query["turmas"].append(turma_)
+    result = scripts_mongodb.insert_object(
+        collection_name="turmas",
+        object={
+            "ano":ano,
+            "nome_provedor":nome_provedor,
+            "ano_escolar":ano_escolar,
+            "alunos":[],
+            "professor":None
+        }
+    )
+
+    turmas.append(ObjectId(result["id"]))
+    # teste = {}[0]
+
+    scripts_mongodb.db["escolas"].update_one({"_id": ObjectId(id_escola)}, {"$set": {"turmas": turmas}})
 
     scripts_mongodb.close_connection()
 
-    context = {"escola": escola_query}
-
-    html_template = loader.get_template("gestor/screens/escola_individual.html")
-    response = HttpResponse(html_template.render(context, request))
-    response.set_cookie("identificador_gestor", identificador)
-    response.set_cookie("id_escola", id_escola)
+    response = redirect('/gestor/escola_individual', context)
+    response.set_cookie('identificador_gestor', identificador)
 
     return response
+
+#Geral
+def gestores_escolares(request):
+    identificador = request.COOKIES.get('identificador_gestor')
+
+    # gestor = core.models.GestorEscola.objects.get(ges_identificador = identificador)
+
+    # professores = core.models.Professor.objects.raw("SELECT p.pro_id, p.pro_primeiro_nome, "+
+    # "p.pro_segundo_nome, string_agg(CONCAT('Ano: ',tur_ano,' Serie: ', tur_ano_escolar), ', ') AS turmas "+
+    # "FROM professor AS p LEFT JOIN turma AS t ON t.pro_id = p.pro_id GROUP BY p.pro_id ORDER BY p.pro_id");
+
+    # # scripts_mongodb = ScriptsMongoDB()
+
+    # # escolas_query = scripts_mongodb.get_data_find(
+    # #     collection_name='gestores',
+    # #     filter = {'identificador': identificador}
+    # # )[0]['escolas']
+
+    # # aux_escolas = []
+
+    # # escolas = []
+    # # labels_chart = []
+    # # data_chart = []
+    # # total_turmas = 0
+
+    # # for escola in escolas_query:
+    # #     escola_query = scripts_mongodb.get_object_by_id(
+    # #         collection_name='escolas',
+    # #         _id=escola
+    # #     )
+    # #     aux_escolas.append(escola_query)
+
+    # # for escola in aux_escolas:
+    # #     labels_chart.append(escola["nome"])
+    # #     data_chart.append(len(escola["turmas"]))
+    # #     escolas.append({
+    # #         "nome": escola["nome"],
+    # #         "quantidade": len(escola["turmas"])
+    # #     })
+    # #     total_turmas += len(escola["turmas"])
+
+    # # scripts_mongodb.close_connection()
+
+    # context = {
+    #     'segment': 'gestores_escolares',
+    #     'escolas': escolas,
+    #     'total_turmas': total_turmas,
+    #     'labels_chart': labels_chart[:5],
+    #     'data_chart': data_chart[:5]
+    # }
+
+    context = {
+        'segment': 'gestores_escolares',
+    }
+
+    html_template = loader.get_template('gestor/screens/gestores_escolares.html')
+    response = HttpResponse(html_template.render(context, request))
+    response.set_cookie('identificador_gestor', identificador)
+
+    return response
+
+def resumo_coletas(request):
+    identificador = request.COOKIES.get('identificador_gestor')
+
+    # scripts_mongodb = ScriptsMongoDB()
+
+    # escolas_query = scripts_mongodb.get_data_find(
+    #     collection_name='gestores',
+    #     filter = {'identificador': identificador}
+    # )[0]['escolas']
+
+    # list_alunos = []
+    # escolas = []
+
+    # for escola_id in escolas_query:
+
+    #     escola = scripts_mongodb.get_object_by_id(
+    #         collection_name='escolas',
+    #         _id=escola_id
+    #     )
+    #     escola_aux = {"nome": escola["nome"], "alunos": []}
+    #     for turma_id in escola["turmas"]:
+    #         turma = scripts_mongodb.get_object_by_id(
+    #             collection_name='turmas',
+    #             _id=turma_id
+    #         )
+    #         escola_aux['alunos'] = escola_aux['alunos'] + turma["alunos"]
+    #         list_alunos = list_alunos + turma["alunos"]
+    #     escolas.append(escola_aux)
+
+    # avaliacoes = {}
+
+    # for aluno in list_alunos:
+    #     avaliacoes[aluno] = scripts_mongodb.get_data_find(
+    #             collection_name='alunos',
+    #             filter = {'_id': aluno}
+    #         )[0]["avaliacao"]
+
+    # list_avaliacoes = {}
+    # for key in avaliacoes:
+    #     list_avaliacoes[avaliacoes[key]] = scripts_mongodb.get_data_find(
+    #             collection_name='avaliacoes',
+    #             filter = {'_id': avaliacoes[key]}
+    #         )[0]
+    # scripts_mongodb.close_connection()
+
+    # escolas_name_label = []
+    # mean_av1 = []
+    # mean_av2 = []
+    # mean_av3 = []
+
+    # for escola in escolas:
+    #     escolas_name_label.append(escola["nome"])
+    #     av1 = 0
+    #     cont1 = 0
+    #     av2 = 0
+    #     cont2 = 0
+    #     av3 = 0
+    #     cont3 = 0
+    #     for aluno in escola["alunos"]:
+    #         avaliacao_id = avaliacoes[aluno]
+    #         avaliacao = list_avaliacoes[avaliacao_id]["avaliacoes"]
+    #         for coleta in avaliacao[0]["coleta"]:
+    #             if(coleta["metrica"] != None):
+    #                 av1 += coleta["metrica"]
+    #                 cont1 += 1
+    #         for coleta in avaliacao[1]["coleta"]:
+    #             if(coleta["metrica"] != None):
+    #                 av2 += coleta["metrica"]
+    #                 cont2 += 1
+    #         for coleta in avaliacao[2]["coleta"]:
+    #             if(coleta["metrica"] != None):
+    #                 av3 += coleta["metrica"]
+    #                 cont3 += 1
+
+    #     if cont1 != 0:
+    #         mean_av1.append(av1/cont1)
+    #     else:
+    #         mean_av1.append(0)
+    #     if cont2 != 0:
+    #         mean_av2.append(av2/cont2)
+    #     else:
+    #         mean_av2.append(0)
+    #     if cont3 != 0:
+    #         mean_av3.append(av3/cont3)
+    #     else:
+    #         mean_av3.append(0)
+    #     # teste={}[0]
+
+    # context = {
+    #     'segment': 'resumo_coletas',
+    #     'avaliacoes': list_avaliacoes,
+    #     "escolas_name_label":   escolas_name_label,
+    #     "mean_av1": mean_av1,
+    #     "mean_av2": mean_av2,
+    #     "mean_av3": mean_av3
+    # }
+    context = {
+        'segment': 'gestores_escolares',
+    }
+    html_template = loader.get_template('gestor/screens/resumo_coletas.html')
+    response = HttpResponse(html_template.render(context, request))
+    response.set_cookie('identificador_gestor', identificador)
+
+    return response
+

@@ -7,7 +7,7 @@
 
 {% block content %}
 
-<div class="col-xl-8 col-md-12 m-b-30" style="margin: 0 auto;margin-top: 20px;display: flex;flex-direction: column;justify-content: center;align-content: center;">
+<div class="col-xl-10 col-md-12 m-b-30" style="margin: 0 auto;margin-top: 20px;display: flex;flex-direction: column;justify-content: center;align-content: center;">
     <h3 class="m-b-10" style="margin-bottom: 70px;text-align: center;">Escolas | Detalhamento por classificação</h3>
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
@@ -29,24 +29,32 @@
                 <thead>
                     <tr>
                         <th>Escola</th>
-                        <th>UF</th>
+                        <th>Categoria</th>
+                        <th>Endereço</th>
                         <th>Município</th>
+                        <th>UF</th>
                         <th class="text-right"></th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for escola_federal in escolas_federais %}
-                        <tr>
-                            <td>
-                                <h6 class="m-0"><img class="rounded-circle m-r-10" style="width:40px;" src="../../../static/assets/images/icons/escola.jpg" alt="activity-user">{{escola_federal.nome}}</h6>
-                            </td>
-                            <td>
-                                <h6 class="m-0">{{escola_federal.uf}}</h6>
-                            </td>
-                            <td>
-                                <h6 class="m-0">{{escola_federal.municipio}}</h6>
-                            </td>
-                        </tr>
+                    <tr>
+                        <td>
+                            <h6 class="m-0"><img class="rounded-circle m-r-10" style="width:40px;" src="../../../static/assets/images/icons/escola.jpg" alt="activity-user">{{escola_federal.uni_nome}}</h6>
+                        </td>
+                        <td>
+                            <h6 class="m-0">{{escola_federal.categoria.cat_escola_desc}}</h6>
+                        </td>
+                        <td>
+                            <h6 class="m-0">{{escola_federal.endereco.end_rua}} - {{escola_federal.endereco.end_numero}}</h6>
+                        </td>
+                        <td>
+                            <h6 class="m-0">{{escola_federal.endereco.cidade.cid_nome}}</h6>
+                        </td>
+                        <td>
+                            <h6 class="m-0">{{escola_federal.endereco.cidade.cid_uf}}</h6>
+                        </td>
+                    </tr>
                     {% endfor %}
                 </tbody>
             </table>
@@ -57,8 +65,10 @@
                 <thead>
                     <tr>
                         <th>Escola</th>
-                        <th>UF</th>
+                        <th>Categoria</th>
+                        <th>Endereço</th>
                         <th>Município</th>
+                        <th>UF</th>
                         <th class="text-right"></th>
                     </tr>
                 </thead>
@@ -66,13 +76,19 @@
                     {% for escola_estadual in escolas_estaduais %}
                         <tr>
                             <td>
-                                <h6 class="m-0"><img class="rounded-circle m-r-10" style="width:40px;" src="../../../static/assets/images/icons/escola.jpg" alt="activity-user">{{escola_estadual.nome}}</h6>
+                                <h6 class="m-0"><img class="rounded-circle m-r-10" style="width:40px;" src="../../../static/assets/images/icons/escola.jpg" alt="activity-user">{{escola_estadual.uni_nome}}</h6>
                             </td>
                             <td>
-                                <h6 class="m-0">{{escola_estadual.uf}}</h6>
+                                <h6 class="m-0">{{escola_estadual.categoria.cat_escola_desc}}</h6>
                             </td>
                             <td>
-                                <h6 class="m-0">{{escola_estadual.municipio}}</h6>
+                                <h6 class="m-0">{{escola_estadual.endereco.end_rua}} - {{escola_estadual.endereco.end_numero}}</h6>
+                            </td>
+                            <td>
+                                <h6 class="m-0">{{escola_estadual.endereco.cidade.cid_nome}}</h6>
+                            </td>
+                            <td>
+                                <h6 class="m-0">{{escola_estadual.endereco.cidade.cid_uf}}</h6>
                             </td>
                         </tr>
                     {% endfor %}
@@ -85,24 +101,32 @@
                 <thead>
                     <tr>
                         <th>Escola</th>
-                        <th>UF</th>
+                        <th>Categoria</th>
+                        <th>Endereço</th>
                         <th>Município</th>
+                        <th>UF</th>
                         <th class="text-right"></th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for escola_municipal in escolas_municipais %}
-                        <tr>
-                            <td>
-                                <h6 class="m-0"><img class="rounded-circle m-r-10" style="width:40px;" src="../../../static/assets/images/icons/escola.jpg" alt="activity-user">{{escola_municipal.nome}}</h6>
-                            </td>
-                            <td>
-                                <h6 class="m-0">{{escola_municipal.uf}}</h6>
-                            </td>
-                            <td>
-                                <h6 class="m-0">{{escola_municipal.municipio}}</h6>
-                            </td>
-                        </tr>
+                    <tr>
+                        <td>
+                            <h6 class="m-0"><img class="rounded-circle m-r-10" style="width:40px;" src="../../../static/assets/images/icons/escola.jpg" alt="activity-user">{{escola_municipal.uni_nome}}</h6>
+                        </td>
+                        <td>
+                            <h6 class="m-0">{{escola_municipal.categoria.cat_escola_desc}}</h6>
+                        </td>
+                        <td>
+                            <h6 class="m-0">{{escola_municipal.endereco.end_rua}} - {{escola_municipal.endereco.end_numero}}</h6>
+                        </td>
+                        <td>
+                            <h6 class="m-0">{{escola_municipal.endereco.cidade.cid_nome}}</h6>
+                        </td>
+                        <td>
+                            <h6 class="m-0">{{escola_municipal.endereco.cidade.cid_uf}}</h6>
+                        </td>
+                    </tr>
                     {% endfor %}
                 </tbody>
             </table>
@@ -112,9 +136,11 @@
                 <thead>
                     <tr>
                         <th>Escola</th>
-                        <th>UF</th>
+                        <th>Categoria</th>
+                        <th>classificação</th>
+                        <th>Endereço</th>
                         <th>Município</th>
-                        <th>Classificação</th>
+                        <th>UF</th>
                         <th class="text-right"></th>
                     </tr>
                 </thead>
@@ -122,28 +148,25 @@
                     {% for escola in escolas %}
                         <tr>
                             <td>
-                                <h6 class="m-0"><img class="rounded-circle m-r-10" style="width:40px;" src="../../../static/assets/images/icons/escola.jpg" alt="activity-user">{{escola.nome}}</h6>
+                                <h6 class="m-0"><img class="rounded-circle m-r-10" style="width:40px;" src="../../../static/assets/images/icons/escola.jpg" alt="activity-user">{{escola.uni_nome}}</h6>
                             </td>
                             <td>
-                                <h6 class="m-0">{{escola.uf}}</h6>
+                                <h6 class="m-0">{{escola.categoria.cat_escola_desc}}</h6>
                             </td>
                             <td>
-                                <h6 class="m-0">{{escola.municipio}}</h6>
+                                <h6 class="m-0">{{escola.tipo.tip_escola_desc}}</h6>
                             </td>
-                            {% if escola.depen_admin == 1 %}
-                                <td><p>Federal</p></td>
-                            {% elif escola.depen_admin == 2 %}
-                                <td><p>Estadual</p></td>
-                            {% elif escola.depen_admin == 3 %}
-                                <td><p>Municipal</p></td>
-                            {% else %}
-                                <td><p class="text-dark mb-1">Não Classificado</p></td>
-                            {% endif %}
                             <td>
-                                <form action="/gestor/escola_individual" method="POST">
-                                    {% csrf_token %}
-                                    <button class="btn btn-primary" type="submit" name="id" value="{{escola.id}}" class="button store-button" style="font-size: 12px;">Visualizar</button>
-                                </form>
+                                <h6 class="m-0">{{escola.endereco.end_rua}} - {{escola.endereco.end_numero}}</h6>
+                            </td>
+                            <td>
+                                <h6 class="m-0">{{escola.endereco.cidade.cid_nome}}</h6>
+                            </td>
+                            <td>
+                                <h6 class="m-0">{{escola.endereco.cidade.cid_uf}}</h6>
+                            </td>
+                            <td>
+                                <a href="/gestor/escola_individual/{{escola.uni_id}}" class="btn btn-primary" style="font-size:12px">Visualizar</a> 
                             </td>
                         </tr>
                     {% endfor %}

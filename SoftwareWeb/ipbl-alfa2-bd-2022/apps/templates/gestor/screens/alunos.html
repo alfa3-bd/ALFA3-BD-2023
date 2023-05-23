@@ -18,6 +18,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <h5>Alunos</h5>
+                                <a href="/gestor/add_alunos" class="btn btn-sm btn-primary" style="float:right;background-color: #3D5482; border: none;"><i class="feather icon-plus-circle"></i>Novo Aluno</a>
                             </div>
                             <div class="card-block table-border-style">
                                 <div class="table-responsive">
@@ -25,25 +26,30 @@
                                         <thead>
                                             <tr>
                                                 <th>Nome</th>
-                                                <th>Sobrenome</th>
+                                                <th>Data Nasc.</th>
                                                 <th>Tipo</th>
                                                 <th>Turma</th>
+                                                <th>Professor</th>
+                                                <th></th>
+                                                <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {% for aluno in alunos %}
                                                 <tr>
-                                                    <td>{{ aluno.nome }}</td>
-                                                    <td>{{ aluno.sobrenome }}</td>
-                                                    <td>{{ aluno.tipo }}</td>
-                                                    <td>Ano: {{ aluno.turma.ano }}  Serie: {{aluno.turma.ano_escolar}}</td>
+                                                    <td>{{ aluno.alu_primeiro_nome }} {{ aluno.alu_segundo_nome }}</td>
+                                                    <td>{{ aluno.alu_data_nascimento|date:"d/m/Y" }}</td>
+                                                    <td>{{ aluno.tipo.tip_alu_desc}}</td>
+                                                    <td>Ano: {{ aluno.turma.tur_ano }}  Serie: {{aluno.turma.tur_ano_escolar}}</td>
+                                                    <td>{{ aluno.turma.pro_id.pro_primeiro_nome }} {{aluno.turma.pro_id.pro_segundo_nome}}</td>
+                                                    <td><a href="/gestor/edit_alunos/{{ aluno.alu_id }}" title="Editar"><i class="feather icon-edit"></i></a></td>
+                                                    <td><a href="/gestor/delete_alunos/{{ aluno.alu_id }}" onclick="return confirm('Tem certeza que deseja apagar?');" title="Apagar"><i class="feather icon-trash-2"></i></a></td>
                                                 </tr>
                                             {% endfor %}
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-                            <a href="/gestor/cadastro_alunos" style="background-color: #3D5482; border: none;width:200px;margin:auto;margin-bottom:10px;" class="btn btn-sm btn-primary">Cadastrar Novo Aluno</a>
                         </div>
                     </div>
                     <!-- [ basic-table ] end -->

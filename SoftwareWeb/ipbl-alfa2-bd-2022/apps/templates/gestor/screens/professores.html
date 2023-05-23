@@ -18,6 +18,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <h5>Professores</h5>
+                                <a href="/gestor/add_professores" class="btn btn-sm btn-primary" style="float:right;background-color: #3D5482; border: none;"><i class="feather icon-plus-circle"></i>Novo Professor</a>
                             </div>
                             <div class="card-block table-border-style">
                                 <div class="table-responsive">
@@ -25,23 +26,26 @@
                                         <thead>
                                             <tr>
                                                 <th>Identificador</th>
-                                                <th>Nome</th>
-                                                <th>Sobrenome</th>
+                                                <th width="40%">Nome</th>
+                                                <th>Turmas</th>
+                                                <th></th>
+                                                <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {% for professor in professores %}
                                                 <tr>
-                                                    <th scope="row">{{ professor.identificador }}</th>
-                                                    <td>{{ professor.nome }}</td>
-                                                    <td>{{ professor.sobrenome }}</td>
+                                                    <th scope="row">{{ professor.pro_identificador }}</th>
+                                                    <td>{{ professor.pro_primeiro_nome }} {{ professor.pro_segundo_nome }}</td>
+                                                    <td>{{ professor.turmas }}</td>
+                                                    <td><a href="/gestor/edit_professores/{{ professor.pro_id }}" title="Editar"><i class="feather icon-edit"></i></a></td>
+                                                    <td><a href="/gestor/delete_professores/{{ professor.pro_id }}" title="Apagar" onclick="return confirm('Tem certeza que deseja apagar?');"><i class="feather icon-trash-2"></i></a></td>
                                                 </tr>
                                             {% endfor %}
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-                            <a href="/gestor/cadastro_professores" style="background-color: #3D5482; border: none;width:200px;margin:auto;margin-bottom:10px;" class="btn btn-sm btn-primary">Cadastrar Novo Professor</a>
                         </div>
                     </div>
                     <!-- [ basic-table ] end -->
