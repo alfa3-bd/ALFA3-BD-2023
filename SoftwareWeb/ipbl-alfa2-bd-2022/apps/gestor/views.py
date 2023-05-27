@@ -1,11 +1,7 @@
-from xxlimited import Null
-from django import template
-from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.shortcuts import redirect
 from dataset.ScriptsMongoDB import ScriptsMongoDB
-from utils.DictHelper import DictHelper
 from utils.CryptoHelper import CryptoHelper
 from bson.objectid import ObjectId
 import json
