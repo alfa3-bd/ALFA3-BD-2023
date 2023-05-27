@@ -35,8 +35,11 @@
                         <div class="input-group mb-3">
                             <input
                                 class="form-control"
-                                placeholder="Identificador Gestor"
+                                placeholder="123.123.123-12"
                                 name="identificador_gestor"
+                                type="text"
+                                id="cpf"
+                                value=""
                             >
                         </div>
 
@@ -46,6 +49,7 @@
                                 class="form-control"
                                 placeholder="Senha Gestor"
                                 name="senha_gestor"
+                                value=""
                             >
                         </div>
 
@@ -57,5 +61,14 @@
             </div>
         </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-1.10.0.min.js"></script>
+    <script src="https://rawgit.com/RobinHerbots/Inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
+    <script>
+        $("input[id*='cpf']").inputmask({
+           mask: ['999.999.999-99'],
+           keepStatic: true
+        });
+    </script>
 
 {% endblock content %}
