@@ -2,6 +2,11 @@
 
 Continuação do projeto ALFA2-BD
 
+```
+mongodb://root:pass@localhost:27017/?authMechanism=DEFAULT
+```
+
+
 ## Explicação da Estrutura
 
 Na pasta `dataset/` está o modelos, scripts SQL para criar as tabelas. O arquivo `ScriptsSQL.py` é uma classe python responsável por executar scripts SQL diretamente no banco.
@@ -17,7 +22,7 @@ Dentro dessa pasta tem o arquivo `mock_dataset.py`, que é responsável por popu
 Para subir o banco de dados localmente, é necessário ter o Docker Compose instalado. Assim, basta executar
 
 ```shell
-docker-compose up db-alfa2bd
+docker-compose up --build
 ```
 
 para subir o banco de dados do time 2. O acesso ao banco está configurado na porta padrão 5432.
@@ -31,7 +36,7 @@ sudo netstat -lpn | grep :5432
 e rodar o seguinte comando no ID:
 
 ```shell
-sudo kill -9
+docker-compose down
 ```
 
 ## Configurando ambiente python
