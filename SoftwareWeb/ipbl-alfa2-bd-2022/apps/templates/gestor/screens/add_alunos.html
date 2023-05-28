@@ -37,7 +37,7 @@
                     <label for="turma">Turma</label>
                     <select class="form-control" name="turma" id="turma">
                         {% for turma in turmas %}
-                        <option value="{{turma.tur_id}}">Turma: {{ turma.tur_ano }} Serie: {{turma.tur_ano_escolar}}</option>
+                        <option value="{{turma.tur_id}}">Turma: {{ turma.tur_ano }} Serie: {{turma.tur_ano_escolar}} | {{turma.uni_nome}}</option>
                         {% endfor %}
                     </select>
                 </div>

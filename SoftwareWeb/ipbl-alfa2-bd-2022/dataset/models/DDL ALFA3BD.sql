@@ -172,8 +172,8 @@ INSERT INTO "professor" ("pro_id", "pro_identificador", "pro_primeiro_nome", "pr
 	(1, '555-12-3456', 'Royall', 'Adams', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA=='),
 	(2, '321-98-7654', 'Shawna', 'Parslow', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA=='),
 	(3, '876-54-3210', 'Blanca', 'Shotton', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA=='),
-	(4, '321-98-7654', 'Guillermo', 'Belf', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA=='),
-	(5, '321-98-7654', 'Sayre', 'Wisker', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA=='),
+	(4, '321-98-7852', 'Guillermo', 'Belf', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA=='),
+	(5, '321-98-7896', 'Sayre', 'Wisker', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA=='),
 	(6, '789-01-2345', 'Melodie', 'Keggins', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA=='),
 	(7, '234-56-7890', 'Nicky', 'Ivey', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA=='),
 	(8, '012-34-5678', 'Moria', 'Tilliards', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA=='),
@@ -412,3 +412,43 @@ INSERT INTO "contrato" ("con_id", "con_data_ini", "con_data_fim", "tip_contr", "
 	(3, '2021-01-01', '2025-01-01', 3, 5);
 /*!40000 ALTER TABLE "contrato" ENABLE KEYS */;
 
+BEGIN;
+SELECT setval(pg_get_serial_sequence('"tipo_aluno"','tip_alu_id'), coalesce(max("tip_alu_id"), 1), max("tip_alu_id") IS NOT null) FROM "tipo_aluno";
+SELECT setval(pg_get_serial_sequence('"tipo_escola"','tip_escola_id'), coalesce(max("tip_escola_id"), 1), max("tip_escola_id") IS NOT null) FROM "tipo_escola";
+SELECT setval(pg_get_serial_sequence('"tipo_frase"','tip_frase_id'), coalesce(max("tip_frase_id"), 1), max("tip_frase_id") IS NOT null) FROM "tipo_frase";
+SELECT setval(pg_get_serial_sequence('"tipo_avaliacao"','tip_aval_id'), coalesce(max("tip_aval_id"), 1), max("tip_aval_id") IS NOT null) FROM "tipo_avaliacao";
+SELECT setval(pg_get_serial_sequence('"frase"','fra_id'), coalesce(max("fra_id"), 1), max("fra_id") IS NOT null) FROM "frase";
+SELECT setval(pg_get_serial_sequence('"categoria_escolar"','cat_escola_id'), coalesce(max("cat_escola_id"), 1), max("cat_escola_id") IS NOT null) FROM "categoria_escolar";
+SELECT setval(pg_get_serial_sequence('"cidade"','cid_id'), coalesce(max("cid_id"), 1), max("cid_id") IS NOT null) FROM "cidade";
+SELECT setval(pg_get_serial_sequence('"endereco"','end_id'), coalesce(max("end_id"), 1), max("end_id") IS NOT null) FROM "endereco";
+SELECT setval(pg_get_serial_sequence('"professor"','pro_id'), coalesce(max("pro_id"), 1), max("pro_id") IS NOT null) FROM "professor";
+SELECT setval(pg_get_serial_sequence('"gestor_escola"','ges_id'), coalesce(max("ges_id"), 1), max("ges_id") IS NOT null) FROM "gestor_escola";
+SELECT setval(pg_get_serial_sequence('"unidade_escolar"','uni_id'), coalesce(max("uni_id"), 1), max("uni_id") IS NOT null) FROM "unidade_escolar";
+SELECT setval(pg_get_serial_sequence('"turma"','tur_id'), coalesce(max("tur_id"), 1), max("tur_id") IS NOT null) FROM "turma";
+SELECT setval(pg_get_serial_sequence('"aluno"','alu_id'), coalesce(max("alu_id"), 1), max("alu_id") IS NOT null) FROM "aluno";
+SELECT setval(pg_get_serial_sequence('"avaliacao"','ava_id'), coalesce(max("ava_id"), 1), max("ava_id") IS NOT null) FROM "avaliacao";
+SELECT setval(pg_get_serial_sequence('"coleta"','col_id'), coalesce(max("col_id"), 1), max("col_id") IS NOT null) FROM "coleta";
+COMMIT;
+
+---------------------------------------------------------------------------------------------------------------------
+-- VIEWS
+---------------------------------------------------------------------------------------------------------------------
+CREATE VIEW view_alunos AS 
+SELECT al.alu_id,al.alu_primeiro_nome,al.alu_segundo_nome,
+al.alu_data_nascimento,pr.pro_primeiro_nome,pr.pro_segundo_nome, 
+tr.tur_ano,tr.tur_ano_escolar,ge.ges_identificador
+FROM aluno AS al 
+JOIN turma AS tr ON tr.tur_id = al.tur_id
+JOIN unidade_escolar AS ue ON ue.uni_id = tr.uni_id
+JOIN gestor_escola AS ge ON ge.ges_id = tr.uni_id
+JOIN tipo_aluno AS ta ON ta.tip_alu_id = al.tip_alu
+JOIN professor AS pr ON pr.pro_id = tr.pro_id;
+COMMIT;
+---------------------------------------------------------------------------------------------------------------------
+-- TRIGGER
+---------------------------------------------------------------------------------------------------------------------
+-- To Do Vou fazer avaliação com coleta
+---------------------------------------------------------------------------------------------------------------------
+-- STORED PROCEDURE
+---------------------------------------------------------------------------------------------------------------------
+-- Ainda não pensei o que fazer

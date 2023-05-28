@@ -14,8 +14,7 @@
 </div>
 <div style="margin: 0 auto;text-align: center;display: flex;flex-direction: row;justify-content: center;align-self: center;">
     <div style="margin: 0 auto;display: flex;flex-direction: column;justify-content: center;align-content: center;width: 800px;">
-       <h2>Em Construção</h2>
-        <!-- <div class="card" style="border-radius: 20px;width: 100%;">
+        <div class="card" style="border-radius: 20px;width: 100%;">
             <div class="card-header">
                 <h5>Avaliação Diagnóstica por Escola</h5>
             </div>
@@ -38,11 +37,11 @@
             <div id="container" style="width: 90%;margin-top: 30px;margin-bottom: 50px;justify-content: center;align-self: center;">
                 <canvas id="bar-chart-av3"></canvas>
             </div>
-        </div> -->
+        </div>
         <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
         <script>
 
-            /*const data1 = {
+            const data1 = {
                 labels: {{ escolas_name_label|safe }},
                 datasets: [{label: 'Média Avaliação Diagnóstica',
                     data: {{ mean_av1|safe }},
@@ -73,8 +72,13 @@
                 data: data1,
                 options: {
                     scales: {
-                        y: {
-                            beginAtZero: true
+                        scales: {
+                            yAxes: [{
+                                display: true,
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
                         }
                     }
                 },
@@ -111,9 +115,14 @@
                 data: data2,
                 options: {
                     scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+                        scales: {
+                            yAxes: [{
+                                display: true,
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
                     }
                 },
             };
@@ -149,9 +158,12 @@
                 data: data3,
                 options: {
                     scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+                        yAxes: [{
+                            display: true,
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
                     }
                 },
             };
@@ -164,7 +176,7 @@
                 var ctx3 = document.getElementById('bar-chart-av3').getContext('2d');
                 window.myPie = new Chart(ctx3, config3);
             };
-            */
+           
         </script>
     </div>
 

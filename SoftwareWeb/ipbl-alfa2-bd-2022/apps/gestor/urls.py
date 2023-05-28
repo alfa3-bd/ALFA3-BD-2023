@@ -25,11 +25,11 @@ urlpatterns = [
     path('resumo_coletas', views.resumo_coletas, name='gestor'),
 
     path('escolas', views.escolas, name='gestor'),
-    path('cadastro_escolas', views.cadastro_escolas, name='gestor'),
-    path('submit_escola', views.submit_escola, name='gestor'),
+    path('add_escolas', views.add_escolas, name='gestor'),
+    path('save_escola', views.save_escola, name='gestor'),
     path('escola_individual/<int:id>', views.escola_individual, name='gestor'),
 
-    path('cadastro_turma', views.cadastro_turma, name='gestor'),
-    path('submit_turma', views.submit_turma, name='gestor'),
+    path('add_turma/<int:id>', views.add_turma, name='gestor'),
+    path('save_turma', views.save_turma, name='gestor'),
 
 ]

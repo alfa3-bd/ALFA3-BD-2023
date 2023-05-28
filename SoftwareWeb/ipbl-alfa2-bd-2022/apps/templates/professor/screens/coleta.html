@@ -19,9 +19,9 @@
                             <div class="card-header">
                                 <h5>Coleta de Audio</h5>
                                 <p class="text-dark mb-1">Aluno</p>
-                                <p>{{ aluno.nome }} {{ aluno.sobrenome }}</p>
+                                <p>{{ aluno.alu_primeiro_nome }} {{ aluno.alu_segundo_nome }}</p>
                                 <p class="text-dark mb-1">Professor</p>
-                                <p>{{ professor.nome }} {{ professor.sobrenome }}</p>
+                                <p>{{ aluno.pro_primeiro_nome }} {{ aluno.pro_segundo_nome }}</p>
                             </div>
                             <div id="msg"></div>
 
@@ -32,7 +32,7 @@
                                             <tr class="unread">
                                                 <td>
                                                     <h6 class="mb-1">Frase Simples</h6>
-                                                    <p class="m-0">{{ frases.tipo_1.frase }}</p>
+                                                    <p class="m-0">{{ frases.tipo_1.fra_frase }}</p>
                                                 </td>
                                                 <td>
                                                     <div class="d-grid gap-3">
@@ -52,7 +52,7 @@
                                             <tr class="unread">
                                                 <td>
                                                     <h6 class="mb-1">Frase Complexas</h6>
-                                                    <p class="m-0">{{ frases.tipo_2.frase }}</p>
+                                                    <p class="m-0">{{ frases.tipo_2.fra_frase }}</p>
                                                 </td>
                                                 <td>
                                                     <div class="d-grid gap-3">
@@ -72,7 +72,7 @@
                                             <tr class="unread">
                                                 <td>
                                                     <h6 class="mb-1">Pseudo Palavras</h6>
-                                                    <p class="m-0">{{ frases.tipo_3.frase }}</p>
+                                                    <p class="m-0">{{ frases.tipo_3.fra_frase }}</p>
                                                 </td>
                                                 <td>
                                                     <div class="d-grid gap-3">

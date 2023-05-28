@@ -24,6 +24,15 @@ class TipoFrase(models.Model):
         managed = False
         db_table = 'tipo_frase'
 
+class TipoAvaliacao(models.Model):
+    tip_aval_id = models.AutoField(primary_key=True, db_column='tip_aval_id')
+    tip_aval_desc = models.CharField(db_column='tip_aval_desc', max_length=255)
+
+    class Meta:
+        managed = False
+        db_table = 'tipo_avaliacao'
+
+
 class Frase(models.Model):
     fra_id = models.AutoField(primary_key=True, db_column='fra_id')
     fra_frase = models.CharField(db_column='fra_frase', max_length=255)
@@ -110,7 +119,6 @@ class Turma(models.Model):
         db_table = 'turma'
 
 class Aluno(models.Model):
-
     alu_id = models.AutoField(primary_key=True, db_column='alu_id')
     alu_primeiro_nome = models.CharField(db_column='alu_primeiro_nome', max_length=255)
     alu_segundo_nome = models.CharField(db_column='alu_segundo_nome', max_length=255)
@@ -121,4 +129,27 @@ class Aluno(models.Model):
     class Meta:
         managed = False
         db_table = 'aluno'
+
+class Avaliacao(models.Model):
+    ava_id = models.AutoField(primary_key=True, db_column='ava_id')
+    ava_data = models.DateField(db_column='ava_data')
+    ava_nota = models.FloatField(db_column='ava_nota')
+    aluno = models.ForeignKey(Aluno,on_delete=models.CASCADE,db_column='alu_id')
+    tipo = models.ForeignKey(TipoAvaliacao,on_delete=models.CASCADE,db_column='ava_tipo')
+
+    class Meta:
+        managed = False
+        db_table = 'avaliacao'
+
+class Coleta(models.Model):
+    col_id = models.AutoField(primary_key=True, db_column='col_id')
+    col_audio = models.CharField(db_column='col_audio', max_length=255)
+    col_metrica = models.FloatField(db_column='col_metrica')
+    frase = models.ForeignKey(Frase,on_delete=models.CASCADE,db_column='fra_id')
+    avaliacao = models.ForeignKey(Avaliacao,on_delete=models.CASCADE,db_column='ava_id')
+
+    class Meta:
+        managed = False
+        db_table = 'coleta'
+
 

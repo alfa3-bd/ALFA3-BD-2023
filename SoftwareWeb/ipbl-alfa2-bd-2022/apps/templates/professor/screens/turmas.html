@@ -21,29 +21,27 @@
                             </div>
                             <div class="card-block px-0 py-3">
                                 <div class="table-responsive">
-                                    <h2>Em construção</h2>
-                                    <!-- <table class="table table-hover">
+                                    <table class="table table-hover">
                                         <tbody>
                                             {% for turma in turmas %}
                                                 <tr class="unread">
                                                     <td><img class="rounded-circle" style="width:40px;" src="/static/assets/images/user/avatar-1.jpg" alt="activity-user"></td>
                                                     <td>
-                                                        <h6 class="mb-1"> Turma de {{ turma.ano }}</h6>
-                                                        <p class="m-0">{{ turma.ano_escolar }}° Ano Escolar</p>
+                                                        <h6 class="mb-1"> Turma de {{ turma.tur_ano }}</h6>
+                                                        <p class="m-0">{{ turma.tur_ano_escolar }}° Ano Escolar</p>
                                                     </td>
                                                     <td>
-                                                        <h6 class="text-muted"><i class="fas fa-circle text-c-green f-10 m-r-15"></i>{{ turma.quant_alu }} Alunos</h6>
+                                                        <h6 class="text-muted"><i class="fas fa-circle text-c-green f-10 m-r-15"></i>{{ turma.turma_qtd }} Alunos</h6>
                                                     </td>
                                                     <td>
-                                                        <form action="/professor/alunos" method="POST">
-                                                            {% csrf_token %}
-                                                            <button class="btn btn-primary" type="submit" name="id_turma" value="{{turma.id_turma}}" class="button store-button">Lista de Alunos</button>
-                                                        </form>
+                                                        {%if turma.turma_qtd > 0%}    
+                                                        <a href="/professor/alunos/{{turma.tur_id}}" class="btn btn-primary" style="font-size:12px">Visualizar</a> 
+                                                        {%endif%}
                                                     </td>
                                                 </tr>
                                             {% endfor%}
                                         </tbody>
-                                    </table> -->
+                                    </table>
                                 </div>
                             </div>
                         </div>
