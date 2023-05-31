@@ -34,18 +34,21 @@
                         {% csrf_token %}
                         <div class="input-group mb-3">
                             <input
-                                class="form-control"
-                                placeholder="Identificador Professor"
+                                class="form-control item"
+                                placeholder="123.123.123-12"
                                 name="identificador_professor"
+                                type="text"
+                                id="cpf"
+                                value=""
                             >
                         </div>
-
                         <div class="input-group mb-4">
                             <input
                                 type="password"
                                 class="form-control"
                                 placeholder="Senha Professor"
                                 name="senha_professor"
+                                value=""
                             >
                         </div>
 
@@ -58,5 +61,14 @@
             </div>
         </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-1.10.0.min.js"></script>
+    <script src="https://rawgit.com/RobinHerbots/Inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
+    <script>
+        $("input[id*='cpf']").inputmask({
+           mask: ['999.999.999-99'],
+           keepStatic: true
+        });
+    </script>
 
 {% endblock content %}

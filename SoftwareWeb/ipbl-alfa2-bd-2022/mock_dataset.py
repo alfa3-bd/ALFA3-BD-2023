@@ -144,7 +144,7 @@ def main(*args, **kwargs):
                 'identificador': fake.cpf(),
                 'nome': fake.first_name(),
                 'sobrenome': fake.last_name(),
-                'hash_senha' : crypto.encrypt_message('1234'),
+                'hash_senha' : crypto.encrypt_message(''),
                 'turma' : []
             }
             obj_professores.append(InsertOne(json_professores))
