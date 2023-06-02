@@ -1,13 +1,14 @@
 from django.http import HttpResponse
 from django.template import loader
 from django.shortcuts import redirect
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
 from django.http import HttpResponseRedirect
-from dataset.ScriptsMongoDB import ScriptsMongoDB
 from utils.CryptoHelper import CryptoHelper
 from random import randint
-from pymongo import InsertOne
 from utils.CryptoHelper import CryptoHelper
 import core.models
+import os
 
 def login(request):
     context = {
@@ -107,9 +108,9 @@ def coleta(request,id):
                                               "JOIN professor AS pr ON pr.pro_id = tr.tur_id "+
                                               "WHERE al.alu_id = '"+str(id)+"' ")[0];
     
-    frases_tipo_1 = core.models.Frase.objects.filter(fra_id = 1)
-    frases_tipo_2 = core.models.Frase.objects.filter(fra_id = 2)
-    frases_tipo_3 = core.models.Frase.objects.filter(fra_id = 3)
+    frases_tipo_1 = core.models.Frase.objects.filter(tipo_id = 1).select_related('tipo')
+    frases_tipo_2 = core.models.Frase.objects.filter(tipo_id = 2).select_related('tipo')
+    frases_tipo_3 = core.models.Frase.objects.filter(tipo_id = 3).select_related('tipo')
 
     frases = {
         'tipo_1': frases_tipo_1[randint(0, len(frases_tipo_1)-1)],
@@ -167,6 +168,17 @@ def view_audio_metrics(request,id):
 
     return response
 
+def getAudio(request):
+    if request.method == "POST":
+        if request.FILES.get("myAudio", False):
+            handleUploadFile(request.FILES["myAudio"])
+    return HttpResponse()
+
+def handleUploadFile(f):  
+    with open("C:/Temp/" + f.name, "wb+") as destination:  
+        for chunk in f.chunks():  
+            destination.write(chunk)
+
 def submit_audios(request):
 
     crypto = CryptoHelper()
@@ -176,33 +188,25 @@ def submit_audios(request):
         'err':''
     }
 
-    data = request.POST
     identificador = request.COOKIES.get('identificador_professor')
-    audio1 = request.COOKIES.get('audio1')
-    audio2 = request.COOKIES.get('audio2')
-    audio3 = request.COOKIES.get('audio3')
 
-    scripts_mongodb = ScriptsMongoDB()
+    if request.method == "POST":
+        if not os.path.isdir("C:/Temp"):
+            os.makedirs("C:/Temp")
 
-    blockchain = [
-        InsertOne({
-            'hash': crypto.encrypt_message(identificador),
-            'prevous_hash': crypto.encrypt_message(identificador),
-            'data':{
-                'identificador': identificador,
-                'audio1': audio1,
-                'audio2': audio2,
-                'audio3': audio3
-            }
-        })
-    ]
-
-    collection_gestores = scripts_mongodb.db['blockchain']
-
-    collection_gestores.bulk_write(blockchain)
-
-    scripts_mongodb.close_connection()
-
+        for i in range(1,4):
+            f = "file{0}".format(i)
+            if request.FILES.get(f, False):
+                files = request.FILES[f]
+                with open("C:/Temp/" + files.name, "wb+") as destination:  
+                    for chunk in files.chunks():  
+                        destination.write(chunk)
+        
+        aluno_id = request.POST["aluno_id"]
+        frase1 = request.POST["frase1"]
+        frase2 = request.POST["frase2"]
+        frase3 = request.POST["frase3"]
+        
     response = redirect('/professor/turmas', context)
     response.set_cookie('identificador_professor', identificador)
 
