@@ -8,11 +8,11 @@
 {% block content %}
 
 <div class="card-body" style="margin: 0 auto;max-width: 1000px; width: 90%;">
-    <h5 style="text-align: center; margin-top: 40px; margin-bottom: 40px;">Cadastro Novo Alunos</h5>
+    <h5 style="text-align: center; margin-top: 40px; margin-bottom: 40px;">Cadastro Novo Aluno</h5>
     <hr>
     <div class="row">
         <div class="row" style="margin: 0 auto;">
-            <form style="text-align: center; width: 600px;" action="/gestor/submit_alunos" method="POST">
+            <form style="text-align: center; width: 600px;" action="/gestor/save_alunos" method="POST">
                 <div class="form-group">
                     <label for="fst_name_aluno">Nome do Aluno</label>
                     <input type="text" name="fst_name_aluno" class="form-control" id="fst_name_aluno" placeholder="Nome Aluno">
@@ -22,18 +22,22 @@
                     <input type="text" name="scn_name_aluno" class="form-control" id="scn_name_aluno" placeholder="Sobrenome Aluno">
                 </div>
                 <div class="form-group">
+                    <label for="scn_name_aluno">Data Nascimento</label>
+                    <input type="text" name="date_nasc_aluno" class="form-control" id="date_nasc_aluno">
+                </div>
+                <div class="form-group">
                     <label for="tipo">Tipo</label>
                     <select class="form-control" name="tipo" id="tipo">
-                        <option value=1>Normal</option>
-                        <option value=2>Especial</option>
-                        <option value=3>Superdotado</option>
+                        {% for tipo_aluno in tipo_alunos %}
+                        <option value="{{tipo_aluno.tip_alu_id}}">{{tipo_aluno.tip_alu_desc}}</option>
+                        {% endfor %}
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="turma">Turma</label>
                     <select class="form-control" name="turma" id="turma">
                         {% for turma in turmas %}
-                        <option value="{{turma.id}}">Turma: {{ turma.ano }} Serie: {{turma.ano_escolar}}</option>
+                        <option value="{{turma.tur_id}}">Turma: {{ turma.tur_ano }} Serie: {{turma.tur_ano_escolar}} | {{turma.uni_nome}}</option>
                         {% endfor %}
                     </select>
                 </div>

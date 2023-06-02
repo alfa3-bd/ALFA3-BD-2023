@@ -19,21 +19,24 @@
                             <div class="card-header">
                                 <h5>Coleta de Audio</h5>
                                 <p class="text-dark mb-1">Aluno</p>
-                                <p>{{ aluno.nome }} {{ aluno.sobrenome }}</p>
+                                <p>{{ aluno.alu_primeiro_nome }} {{ aluno.alu_segundo_nome }}</p>
                                 <p class="text-dark mb-1">Professor</p>
-                                <p>{{ professor.nome }} {{ professor.sobrenome }}</p>
+                                <p>{{ aluno.pro_primeiro_nome }} {{ aluno.pro_segundo_nome }}</p>
                             </div>
                             <div id="msg"></div>
 
                             <div class="card-block px-0 py-3">
                                 <div class="table-responsive">
+                                    <form id="audioForm" onsubmit="return submitFunction(event)">
                                     <table class="table table-hover">
                                         <tbody>
-                                            <tr class="unread">
-                                                <td>
-                                                    <h6 class="mb-1">Frase Simples</h6>
-                                                    <p class="m-0">{{ frases.tipo_1.frase }}</p>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <h6 class="mb-1">Frase Simples</h6>  
+                                                    <p class="m-0">{{ frases.tipo_1.fra_frase }}</p>
                                                 </td>
+                                            </tr>
+                                            <tr>   
                                                 <td>
                                                     <div class="d-grid gap-3">
                                                         <button id="record1" class="btn btn-primary center">
@@ -49,11 +52,13 @@
                                                     <div><audio controls autoplay playsinline id="audio1" ></audio></div>
                                                 </td>
                                             </tr>
-                                            <tr class="unread">
-                                                <td>
-                                                    <h6 class="mb-1">Frase Complexas</h6>
-                                                    <p class="m-0">{{ frases.tipo_2.frase }}</p>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <h6 class="mb-1">Frase Complexas</h6>  
+                                                    <p class="m-0">{{ frases.tipo_2.fra_frase }}</p>
                                                 </td>
+                                            </tr>
+                                            <tr>
                                                 <td>
                                                     <div class="d-grid gap-3">
                                                         <button id="record2" class="btn btn-primary center">
@@ -66,14 +71,16 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <div><audio controls autoplay playsinline id="audio2" ></audio></div>
+                                                    <div><audio controls autoplay playsinline id="audio2" ></audio></div>                                                    
                                                 </td>
                                             </tr>
-                                            <tr class="unread">
-                                                <td>
-                                                    <h6 class="mb-1">Pseudo Palavras</h6>
-                                                    <p class="m-0">{{ frases.tipo_3.frase }}</p>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <h6 class="mb-1">Frase Palavras</h6>  
+                                                    <p class="m-0">{{ frases.tipo_3.fra_frase }}</p>
                                                 </td>
+                                            </tr>
+                                            <tr>
                                                 <td>
                                                     <div class="d-grid gap-3">
                                                         <button id="record3" class="btn btn-primary center">
@@ -86,17 +93,23 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <div><audio controls autoplay playsinline id="audio3" ></audio></div>
+                                                    <div><audio controls autoplay playsinline id="audio3" ></audio></div>    
                                                 </td>
                                             </tr>
                                         </tbody>
                                     </table>
                                     <div class="d-flex justify-content-center">
-                                        <form role="form" action="/professor/submit_audios" method="post">
+                                        
+                                            <input type="hidden" id="alu_id" name="alu_id" value="{{aluno.alu_id}}">
+
+                                            <input type="hidden" name="frase1" id="frase1" value="{{frases.tipo_1.fra_id}}">
+                                            <input type="hidden" name="frase2" id="frase2" value="{{frases.tipo_2.fra_id}}">
+                                            <input type="hidden" name="frase3" id="frase3" value="{{frases.tipo_3.fra_id}}">
                                             {% csrf_token %}
-                                            <button name="audios" class="btn btn-primary shadow-2 mb-4">Submeter Audios</button>
-                                        </form>
+                                            <button name="submitAudios" id="submitAudios" class="btn btn-primary shadow-2 mb-4">Submeter Audios</button>
+                                        
                                     </div>
+                                </form>
                                 </div>
                             </div>
                         </div>

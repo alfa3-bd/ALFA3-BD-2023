@@ -8,12 +8,13 @@
 {% block content %}
 
 <div class="col-xl-8 col-md-12 m-b-30" style="margin: 0 auto;margin-top: 20px;display: flex;flex-direction: column;justify-content: center;align-content: center;">
-    <h3 class="m-b-10" style="margin-bottom: 70px;text-align: center;">Escola {{escola.nome}}</h3>
+    <h3 class="m-b-10" style="margin-bottom: 70px;text-align: center;">Escola {{escola.uni_nome}}</h3>
     <section>
-        <p>Codigo INEP: {{escola.codigo_inep}}</p>
-        <p>UF: {{escola.uf}}</p>
-        <p>Município: {{escola.municipio}}</p>
-        <p>CEP: {{escola.cep}}</p>
+        <p>Codigo INEP: {{escola.uni_codigo_inep}}</p>
+        <p>Endereço: {{escola.endereco.end_rua}} - {{escola.endereco.end_numero}}</p>
+        <p>CEP: {{escola.endereco.end_cep}}</p>
+        <p>Município: {{escola.endereco.cidade.cid_nome}}</p>
+        <p>UF: {{escola.endereco.cidade.cid_uf}}</p>
     </section>
 
     <section>
@@ -33,16 +34,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for turma in escola.turmas %}
+                            {% for turma in turmas %}
                                 <tr>
                                     <td>
-                                        <h6 class="m-0"><img class="rounded-circle m-r-10" style="width:40px;" src="../../../static/assets/images/icons/escola.jpg" alt="activity-user">{{turma.ano_escolar}}° ano</h6>
+                                        <h6 class="m-0"><img class="rounded-circle m-r-10" style="width:40px;" src="../../../static/assets/images/icons/escola.jpg" alt="activity-user">{{turma.tur_ano_escolar}}° ano</h6>
                                     </td>
                                     <td>
-                                        <h6 class="m-0">{{turma.ano}}</h6>
+                                        <h6 class="m-0">{{turma.tur_ano}}</h6>
                                     </td>
                                     <td>
-                                        <h6 class="m-0">{{turma.nome_provedor}}</h6>
+                                        <h6 class="m-0">{{turma.professor.pro_primeiro_nome}} {{turma.professor.pro_segundo_nome}}</h6>
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -53,11 +54,7 @@
         </div>
     </section>
 
-    <form style="text-align: center; margin-top: 20px;margin-bottom: 30px;" action="/gestor/cadastro_turma" method="POST">
-        {% csrf_token %}
-        <button style="background-color: #3D5482; border: none;" class="btn btn-primary" type="submit" name="id_turma" value="1" class="button store-button">Cadastrar Nova Turma</button>
-    </form>
-
+    <a href="/gestor/add_turma/{{escola.uni_id}}" class="btn btn-primary" style="font-size:12px;background-color: #3D5482; border: none; text-align: center; margin: 20px auto; width:200px;">Cadastrar Nova Turma</a>
 </div>
 
 {% endblock content %}

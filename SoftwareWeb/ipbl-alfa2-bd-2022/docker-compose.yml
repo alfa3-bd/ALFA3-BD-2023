@@ -1,13 +1,16 @@
 version: '3.8'
 services:
-  appseed-app:
-    container_name: appseed_app
+  alfa3bd:
+    container_name: alfa3bd
     restart: always
     depends_on:
       - db-nosql
     # command: [ "python", "mock_dataset.py"]
     env_file: .env
     build: .
+    depends_on:
+      - postgres
+      - mongo
     networks:
       - db_network
       - web_network
@@ -22,8 +25,8 @@ services:
     networks:
       - web_network
     depends_on:
-      - appseed-app
-  db-alfa3bd:
+      - alfa3bd
+  postgres:
     image: postgres:13-alpine
     ports:
       - "5432:5432"
@@ -34,8 +37,11 @@ services:
     command: [ "postgres", "-c", "log_statement=all" ]
     restart: always
     networks:
-      - alfa3bd
-  db-nosql:
+      - db_network
+      - web_network
+    volumes:
+      - ./ddl_scripts/01_create_tables.sql:/docker-entrypoint-initdb.d/ddl_script.sql
+  mongo:
     image: mongo
     restart: always
     environment:
@@ -52,4 +58,3 @@ networks:
     driver: bridge
   web_network:
     driver: bridge
-  alfa3bd: { }

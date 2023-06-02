@@ -1,5 +1,4 @@
 from django.urls import path, re_path
-from psutil import virtual_memory
 from apps.professor import views
 
 urlpatterns = [
@@ -13,11 +12,11 @@ urlpatterns = [
     path('informacoes', views.informacoes, name='professor'),
 
     path('turmas', views.turmas, name='professor'),
-    path('alunos', views.alunos, name='professor'),
+    path('alunos/<int:id>', views.alunos, name='professor'),
 
-    path('coleta', views.coleta, name='professor'),
+    path('coleta/<int:id>', views.coleta, name='professor'),
     path('submit_audios', views.submit_audios, name='professor'),
 
     path('banco_frases', views.banco_frases, name='professor'),
-    path('view_audio_metrics', views.view_audio_metrics, name='professor'),
+    path('view_audio_metrics/<int:id>', views.view_audio_metrics, name='professor'),
 ]

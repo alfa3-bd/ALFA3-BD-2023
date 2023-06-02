@@ -72,8 +72,13 @@
                 data: data1,
                 options: {
                     scales: {
-                        y: {
-                            beginAtZero: true
+                        scales: {
+                            yAxes: [{
+                                display: true,
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
                         }
                     }
                 },
@@ -110,9 +115,14 @@
                 data: data2,
                 options: {
                     scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+                        scales: {
+                            yAxes: [{
+                                display: true,
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
                     }
                 },
             };
@@ -148,9 +158,12 @@
                 data: data3,
                 options: {
                     scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+                        yAxes: [{
+                            display: true,
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
                     }
                 },
             };
@@ -163,7 +176,7 @@
                 var ctx3 = document.getElementById('bar-chart-av3').getContext('2d');
                 window.myPie = new Chart(ctx3, config3);
             };
-
+           
         </script>
     </div>
 

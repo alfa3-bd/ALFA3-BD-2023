@@ -34,12 +34,12 @@
                                             {% for frase in frases %}
                                                 <tr>
                                                     <th scope="row">{{ forloop.counter }}</th>
-                                                    <td>{{ frase.frase }}</td>
-                                                    {% if frase.tipo == 1 %}
+                                                    <td>{{ frase.fra_frase }}</td>
+                                                    {% if frase.tipo.tip_frase_id == 1 %}
                                                         <td><p class="text-success mb-1">Palavras Aleatórias</p></td>
-                                                    {% elif frase.tipo == 2 %}
+                                                    {% elif frase.tipo.tip_frase_id == 2 %}
                                                         <td><p class="text-warning mb-1">Palavras Simples</p></td>
-                                                    {% elif frase.tipo == 3 %}
+                                                    {% elif frase.tipo.tip_frase_id == 3 %}
                                                         <td><p class="text-danger mb-1">Pseudo Palavras</p></td>
                                                     {% else %}
                                                         <td><p class="text-dark mb-1">Tipo não Registrado</p></td>
