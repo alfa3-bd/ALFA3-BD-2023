@@ -23,7 +23,7 @@ CREATE TABLE TIPO_ALUNO (
 -- Table: AVALIACAO
 CREATE TABLE AVALIACAO (
     ava_id serial  NOT NULL,
-    ava_tipo varchar(256)  NOT NULL,
+    tip_aval_id serial NOT NULL,
     ava_data timestamp  NOT NULL,
     ava_nota numeric(10, 2),
     alu_id serial  NOT NULL,
@@ -46,7 +46,7 @@ CREATE TABLE CONTRATO (
     con_id serial  NOT NULL,
     con_data_ini date  NOT NULL,
     con_data_fim date  NOT NULL,
-    con_tipo int  NOT NULL,
+    tip_con_id serial  NOT NULL,
     uni_id serial  NOT NULL,
     CONSTRAINT CONTRATO_pk PRIMARY KEY (con_id)
 );
@@ -55,7 +55,7 @@ CREATE TABLE CONTRATO (
 CREATE TABLE FRASE (
     fra_id serial  NOT NULL,
     fra_frase varchar(256)  NOT NULL,
-    fra_tipo int  NOT NULL,
+    tip_frase_id serial  NOT NULL,
     CONSTRAINT FRASE_pk PRIMARY KEY (fra_id)
 );
 
@@ -104,7 +104,8 @@ CREATE TABLE UNIDADE_ESCOLAR (
     uni_id serial  NOT NULL,
     uni_codigo_inep int  NOT NULL,
     uni_nome varchar(255)  NOT NULL,
-    uni_categ_admin int  NOT NULL,
+    cat_esc_id serial  NOT NULL,
+    tip_esc_id serial  NOT NULL,
     uni_depen_admin int  NOT NULL,
     ges_id int  NOT NULL,
     end_id int  NOT NULL,
@@ -121,12 +122,48 @@ CREATE TABLE ENDERECO (
     CONSTRAINT ENDERECO_pk PRIMARY KEY (end_id)
 );
 
+-- Table: CIDADE
 CREATE TABLE CIDADE (
     cid_id serial  NOT NULL,
     cid_nome varchar(255)  NOT NULL,
     cid_uf varchar(2)  NOT NULL,
     cid_pais varchar(50)  NOT NULL,
     CONSTRAINT CIDADE_pk PRIMARY KEY (cid_id)
+);
+
+-- Table: CATEGORIA_ESCOLAR
+CREATE TABLE CATEGORIA_ESCOLAR (
+	cat_esc_id serial NOT NULL,
+	cat_esc_desc varchar(255) NOT NULL,
+	CONSTRAINT CATEGORIA_ESCOLAR_pk PRIMARY KEY (cat_esc_id)
+);
+
+-- Table: TIPO_AVALIACAO
+CREATE TABLE TIPO_AVALIACAO (
+	tip_aval_id serial NOT NULL,
+	tip_aval_desc varchar(255) NOT NULL,
+	CONSTRAINT TIPO_AVALIACAO_pk PRIMARY KEY (tip_aval_id)
+);
+
+-- Table: TIPO_CONTRATO
+CREATE TABLE TIPO_CONTRATO (
+	tip_con_id serial NOT NULL,
+	tip_con_desc varchar(255) NOT NULL,
+	CONSTRAINT TIPO_CONTRATO_pk PRIMARY KEY (tip_con_id)
+);
+
+-- Table: TIPO_ESCOLA
+CREATE TABLE TIPO_ESCOLA (
+	tip_esc_id serial NOT NULL,
+	tip_esc_desc varchar(255) NOT NULL,
+	CONSTRAINT TIPO_ESCOLA_pk PRIMARY KEY (tip_esc_id)
+);
+
+-- Table: TIPO_FRASE
+CREATE TABLE TIPO_FRASE (
+	tip_frase_id serial NOT NULL,
+	tip_frase_desc varchar(255) NOT NULL,
+	CONSTRAINT TIPO_ESCOLA_pk PRIMARY KEY (tip_frase_id)
 );
 
 -- foreign keys
@@ -138,7 +175,8 @@ ALTER TABLE ALUNO ADD CONSTRAINT ALUNO_Turma
     INITIALLY IMMEDIATE
 ;
 
-ALTER TABLE ALUNO ADD CONSTRAINT ALUNO_Tipo
+-- Reference: ALUNO_TIPO (table: ALUNO)
+ALTER TABLE ALUNO ADD CONSTRAINT ALUNO_TIPO
     FOREIGN KEY (tip_alu)
     REFERENCES TIPO_ALUNO (tip_alu_id)  
     NOT DEFERRABLE 
@@ -157,6 +195,14 @@ ALTER TABLE AVALIACAO ADD CONSTRAINT AVALIACAO_ALUNO
 ALTER TABLE AVALIACAO ADD CONSTRAINT AVALIACAO_PROFESSOR
     FOREIGN KEY (pro_id)
     REFERENCES PROFESSOR (pro_id)  
+    NOT DEFERRABLE 
+    INITIALLY IMMEDIATE
+;
+
+-- Reference: TIPO_AVALIACAO (table: AVALIACAO)
+ALTER TABLE AVALIACAO ADD CONSTRAINT TIPO_AVALIACAO
+    FOREIGN KEY (tip_aval_id)
+    REFERENCES TIPO_AVALIACAO (tip_aval_id)  
     NOT DEFERRABLE 
     INITIALLY IMMEDIATE
 ;
@@ -181,6 +227,14 @@ ALTER TABLE COLETA ADD CONSTRAINT COLETA_FRASES
 ALTER TABLE CONTRATO ADD CONSTRAINT CONTRATO_UNIDADE_ESCOLAR
     FOREIGN KEY (uni_id)
     REFERENCES UNIDADE_ESCOLAR (uni_id)  
+    NOT DEFERRABLE 
+    INITIALLY IMMEDIATE
+;
+
+-- Reference: TIPO_CONTRATO (table: CONTRATO)
+ALTER TABLE CONTRATO ADD CONSTRAINT TIPO_CONTRATO
+    FOREIGN KEY (tip_con_id)
+    REFERENCES TIPO_CONTRATO (tip_con_id)  
     NOT DEFERRABLE 
     INITIALLY IMMEDIATE
 ;
@@ -225,9 +279,34 @@ ALTER TABLE UNIDADE_ESCOLAR ADD CONSTRAINT UNIDADE_ESCOLAR_ENDERECO
     INITIALLY IMMEDIATE
 ;
 
+-- Reference: UNIDADE_ESCOLAR_CATEGORIA (table: UNIDADE_ESCOLAR)
+ALTER TABLE UNIDADE_ESCOLAR ADD CONSTRAINT UNIDADE_ESCOLAR_CATEGORIA 
+    FOREIGN KEY (cat_esc_id)
+    REFERENCES CATEGORIA_ESCOLAR (cat_esc_id)
+    NOT DEFERRABLE 
+    INITIALLY IMMEDIATE
+;
+
+-- Reference: UNIDADE_ESCOLAR_TIPO (table: UNIDADE_ESCOLAR)
+ALTER TABLE UNIDADE_ESCOLAR ADD CONSTRAINT UNIDADE_ESCOLAR_TIPO
+    FOREIGN KEY (tip_esc_id)
+    REFERENCES TIPO_ESCOLA (tip_esc_id)
+    NOT DEFERRABLE 
+    INITIALLY IMMEDIATE
+;
+
+-- Reference: ENDERECO_CIDADE (table: ENDERECO)
 ALTER TABLE ENDERECO ADD CONSTRAINT ENDERECO_CIDADE
     FOREIGN KEY (cid_id)
     REFERENCES CIDADE (cid_id)
+    NOT DEFERRABLE 
+    INITIALLY IMMEDIATE
+;
+
+-- Reference: TIPO_FRASE (table: FRASE)
+ALTER TABLE FRASE ADD CONSTRAINT TIPO_FRASE
+    FOREIGN KEY (tip_frase_id)
+    REFERENCES TIPO_FRASE (tip_frase_id)
     NOT DEFERRABLE 
     INITIALLY IMMEDIATE
 ;
