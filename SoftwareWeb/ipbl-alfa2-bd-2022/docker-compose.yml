@@ -3,8 +3,6 @@ services:
   alfa3bd:
     container_name: alfa3bd
     restart: always
-    depends_on:
-      - db-nosql
     # command: [ "python", "mock_dataset.py"]
     env_file: .env
     build: .
