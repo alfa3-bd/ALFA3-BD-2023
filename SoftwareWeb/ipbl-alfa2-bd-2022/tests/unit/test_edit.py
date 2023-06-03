@@ -31,26 +31,14 @@ def simulate_login():
     
     return logged
 
-def access_list(page): 
-    driver.get("http://localhost:85/gestor/"+page)
-    msg = driver.find_element(By.CSS_SELECTOR,"H5").get_attribute("innerHTML")
-
-    return msg.lower()
-
-def add(page):
-    driver.get("http://localhost:85/gestor/add_"+page)
+def edit(page):
+    driver.get("http://localhost:85/gestor/edit_"+page+"/1")
 
     if page in "alunos":      
-        driver.find_element("name", "fst_name_aluno").send_keys("Joaquim")
-        driver.find_element("name", "scn_name_aluno").send_keys("Silveira")
-        driver.find_element("name", "tipo").send_keys(1)
-        driver.find_element("name", "turma").send_keys(1)
+        driver.find_element("name", "scn_name_aluno").send_keys("changed")
         driver.find_element(By.XPATH,"//button[@type='submit']").click()        
     else:
-        driver.find_element("name", "cpf").send_keys("356.222.333-20")
-        driver.find_element("name", "fst_name_prof").send_keys("Ana Maria")
-        driver.find_element("name", "scn_name_prof").send_keys("Ramos")
-        driver.find_element("name", "password").send_keys("123")
+        driver.find_element("name", "scn_name_prof").send_keys("changed")
         driver.find_element(By.XPATH,"//button[@type='submit']").click()  
 
     WebDriverWait(driver=driver, timeout=10).until(
@@ -65,12 +53,9 @@ def add(page):
 def test_login():
     assert "Página do Gestor" in simulate_login()
 
-def test_lists():
-    for page in pages:
-        assert page in access_list(page)
 
-def test_add():
+def test_edit():
     for page in pages:
-        assert page in add(page)
+        assert page in edit(page)
 
 
