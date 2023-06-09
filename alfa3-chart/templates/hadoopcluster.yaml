@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hadoop-node
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hadoop-node
+  template:
+    metadata:
+      labels:
+        app: hadoop-node
+    spec:
+      containers:
+      - name: namenode
+        image: hadoop:3
+        ports:
+        - containerPort: 9870
+        env:
+          - name: HOSTNAME
+            value: hadoop-node
+        volumeMounts:
+        - name: hdfs-data
+          mountPath: /hadoop/dfs/name
+      volumes:
+      - name: hdfs-data
+        persistentVolumeClaim:
+          claimName: hdfs-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hadoop-node
+spec:
+  selector:
+    app: hadoop-node
+  ports:
+  - protocol: TCP
+    port: 9870
+    targetPort: 9870
+  type: ClusterIP

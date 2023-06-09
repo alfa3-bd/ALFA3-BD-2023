@@ -1,0 +1,63 @@
+{% extends "gestor/base/base.html" %}
+
+{% block title %} Professores {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+            <div class="page-wrapper">
+                <!-- [ Main Content ] start -->
+                <div class="d-flex justify-content-center">
+                    <!-- [ basic-table ] start -->
+                    <div class="col-xl-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Professores</h5>
+                                <a href="/gestor/add_professores" class="btn btn-sm btn-primary" style="float:right;background-color: #3D5482; border: none;"><i class="feather icon-plus-circle"></i>Novo Professor</a>
+                            </div>
+                            <div class="card-block table-border-style">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th width="20%">Identificador</th>
+                                                <th>Nome</th>
+                                                <th>Sobrenome</th>
+                                                <th width="5%"></th>
+                                                <th width="5%"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for professor in professores %}
+                                                <tr>
+                                                    <th scope="row"><a href="#" data-toggle="popover" data-placement="right" data-container="body" data-content="Turmas: {{ professor.turmas }}">{{ professor.pro_identificador }}</a></th>
+                                                    <td>{{ professor.pro_primeiro_nome }}</td>
+                                                    <td>{{ professor.pro_segundo_nome }}</td>
+                                                    <td><a href="/gestor/edit_professores/{{ professor.pro_id }}" title="Editar"><i class="feather icon-edit"></i></a></td>
+                                                    <td><a href="/gestor/delete_professores/{{ professor.pro_id }}" title="Apagar" onclick="return confirm('Tem certeza que deseja apagar?');"><i class="feather icon-trash-2"></i></a></td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- [ basic-table ] end -->
+                </div>
+                <!-- [ Main Content ] end -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

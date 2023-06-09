@@ -1,0 +1,183 @@
+{% extends "gestor/base/base.html" %}
+
+{% block title %} Escolas {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="col-xl-10 col-md-12 m-b-30" style="margin: 0 auto;margin-top: 20px;display: flex;flex-direction: column;justify-content: center;align-content: center;">
+    <h3 class="m-b-10" style="margin-bottom: 70px;text-align: center;">Escolas | Detalhamento por classificação</h3>
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" style="background-color: #3D5482;border-top-left-radius: 10px;border-top-right-radius: 10px;">
+            <a class="nav-link active show" id="todas-tab" data-toggle="tab" href="#todas" role="tab" aria-controls="todas" aria-selected="true">Todas</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link " id="federal-tab" data-toggle="tab" href="#federal" role="tab" aria-controls="federal" aria-selected="true">Federal</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="estadual-tab" data-toggle="tab" href="#estadual" role="tab" aria-controls="estadual" aria-selected="true">Estadual</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="municipal-tab" data-toggle="tab" href="#municipal" role="tab" aria-controls="municipal" aria-selected="true">Municipal</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent" style="border-radius: 20px;border-top-left-radius: 0px;">
+        <div class="tab-pane fade active show" id="todas" role="tabpanel" aria-labelledby="todas-tab">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Escola</th>
+                        <th>Categoria</th>
+                        <th>classificação</th>
+                        <th>Endereço</th>
+                        <th>Município</th>
+                        <th>UF</th>
+                        <th class="text-right"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for escola in escolas %}
+                        <tr>
+                            <td style="width:40%;">
+                                <h6 class="m-0" style="white-space:normal"><img class="rounded-circle m-r-10" style="width:40px;" src="../../../static/assets/images/icons/escola.jpg" alt="activity-user">{{escola.uni_nome}}</h6>
+                            </td>
+                            <td>
+                                <h6 class="m-0">{{escola.categoria.cat_escola_desc}}</h6>
+                            </td>
+                            <td>
+                                <h6 class="m-0">{{escola.tipo.tip_escola_desc}}</h6>
+                            </td>
+                            <td>
+                                <h6 class="m-0">{{escola.endereco.end_rua}} - {{escola.endereco.end_numero}}</h6>
+                            </td>
+                            <td>
+                                <h6 class="m-0">{{escola.endereco.cidade.cid_nome}}</h6>
+                            </td>
+                            <td>
+                                <h6 class="m-0">{{escola.endereco.cidade.cid_uf}}</h6>
+                            </td>
+                            <td>
+                                <a href="/gestor/escola_individual/{{escola.uni_id}}" class="btn btn-primary" style="font-size:12px">Visualizar</a> 
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane fade" id="federal" role="tabpanel" aria-labelledby="federal-tab">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Escola</th>
+                        <th>Categoria</th>
+                        <th>Endereço</th>
+                        <th>Município</th>
+                        <th>UF</th>
+                        <th class="text-right"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for escola_federal in escolas_federais %}
+                    <tr>
+                        <td style="width:40%;">
+                            <h6 class="m-0" style="white-space:normal"><img class="rounded-circle m-r-10" style="width:40px;" src="../../../static/assets/images/icons/escola.jpg" alt="activity-user">{{escola_federal.uni_nome}}</h6>
+                        </td>
+                        <td>
+                            <h6 class="m-0">{{escola_federal.categoria.cat_escola_desc}}</h6>
+                        </td>
+                        <td>
+                            <h6 class="m-0">{{escola_federal.endereco.end_rua}} - {{escola_federal.endereco.end_numero}}</h6>
+                        </td>
+                        <td>
+                            <h6 class="m-0">{{escola_federal.endereco.cidade.cid_nome}}</h6>
+                        </td>
+                        <td>
+                            <h6 class="m-0">{{escola_federal.endereco.cidade.cid_uf}}</h6>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+        <div class="tab-pane fade" id="estadual" role="tabpanel" aria-labelledby="estadual-tab">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Escola</th>
+                        <th>Categoria</th>
+                        <th>Endereço</th>
+                        <th>Município</th>
+                        <th>UF</th>
+                        <th class="text-right"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for escola_estadual in escolas_estaduais %}
+                        <tr>
+                            <td style="width:40%;">
+                                <h6 class="m-0" style="white-space:normal"><img class="rounded-circle m-r-10" style="width:40px;" src="../../../static/assets/images/icons/escola.jpg" alt="activity-user">{{escola_estadual.uni_nome}}</h6>
+                            </td>
+                            <td>
+                                <h6 class="m-0">{{escola_estadual.categoria.cat_escola_desc}}</h6>
+                            </td>
+                            <td>
+                                <h6 class="m-0">{{escola_estadual.endereco.end_rua}} - {{escola_estadual.endereco.end_numero}}</h6>
+                            </td>
+                            <td>
+                                <h6 class="m-0">{{escola_estadual.endereco.cidade.cid_nome}}</h6>
+                            </td>
+                            <td>
+                                <h6 class="m-0">{{escola_estadual.endereco.cidade.cid_uf}}</h6>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+        <div class="tab-pane fade" id="municipal" role="tabpanel" aria-labelledby="municipal-tab">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Escola</th>
+                        <th>Categoria</th>
+                        <th>Endereço</th>
+                        <th>Município</th>
+                        <th>UF</th>
+                        <th class="text-right"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for escola_municipal in escolas_municipais %}
+                    <tr>
+                        <td style="width:40%;">
+                            <h6 class="m-0" style="white-space:normal"><img class="rounded-circle m-r-10" style="width:40px;" src="../../../static/assets/images/icons/escola.jpg" alt="activity-user">{{escola_municipal.uni_nome}}</h6>
+                        </td>
+                        <td>
+                            <h6 class="m-0">{{escola_municipal.categoria.cat_escola_desc}}</h6>
+                        </td>
+                        <td>
+                            <h6 class="m-0">{{escola_municipal.endereco.end_rua}} - {{escola_municipal.endereco.end_numero}}</h6>
+                        </td>
+                        <td>
+                            <h6 class="m-0">{{escola_municipal.endereco.cidade.cid_nome}}</h6>
+                        </td>
+                        <td>
+                            <h6 class="m-0">{{escola_municipal.endereco.cidade.cid_uf}}</h6>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <a href="/gestor/add_escolas" class="btn btn-primary" style="font-size:12px;background-color: #3D5482; border: none; text-align: center; margin: 20px auto; width:200px;">Cadastrar Nova Escola</a>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

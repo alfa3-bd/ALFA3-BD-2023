@@ -1,0 +1,30 @@
+replicas: 1
+
+containers:
+  alfa3-bd:
+    image:
+      repository: projetoalfa/alfa3-bd
+      tag: 1.1.0
+    ports:
+      containerPort: 5005
+
+  hadoop:
+    image:
+      repository: apache/hadoop
+      tag: 3
+    ports:
+      containerPort: 5000
+
+  nlp-api:
+    image:
+      repository: projetoalfa/nlp-api
+      tag: 1.1.0
+    ports:
+      containerPort: 5000
+
+  postgres:
+    image:
+      repository: postgres
+      tag: latest
+    ports:
+      containerPort: 5432

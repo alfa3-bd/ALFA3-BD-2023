@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alfa3-bd
+  labels:
+    app: alfa3-bd
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      app: alfa3-bd
+  template:
+    metadata:
+      labels:
+        app: alfa3-bd
+    spec:
+      containers:
+        - name: alfa3-bd
+          image: {{ include "alfa3-bd.getImage" . }}
+          ports:
+            - containerPort: {{ .Values.alfa3-bd.ports.containerPort }}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: alfa3-bd
+  labels:
+    app: alfa3-bd
+spec:
+  type: LoadBalancer
+  ports:
+  - port: {{ .Values.alfa3-bd.ports.containerPort }}
+    targetPort: {{ .Values.alfa3-bd.ports.containerPort }}
+    protocol: TCP
+    name: http
+  selector:
+    app: alfa3-bd
+
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: alfa3-bd-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: alfa3-bd
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 80

@@ -1,0 +1,4 @@
+apiVersion: v2
+name: alfa3-chart
+version: 1.0.0
+description: Projeto ALFA3-BD - Análise de Fluência da Alfabetização
