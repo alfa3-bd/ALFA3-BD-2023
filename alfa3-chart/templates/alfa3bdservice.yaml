@@ -19,6 +19,12 @@ spec:
           image: {{ include "alfa3-bd.getImage" . }}
           ports:
             - containerPort: {{ .Values.alfa3-bd.ports.containerPort }}
+          env:
+            - name: DB_PG_HOST_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: alfa3-env-config
+                  key: DB_PG_HOST_NAME
         - name: nginx
           image: nginx:latest
           ports:
@@ -27,10 +33,19 @@ spec:
             - name: nginx-conf
               mountPath: /etc/nginx/conf.d
               readOnly: true
+          command: ["/bin/sh"]
+          args: ["-c", "until nc -z alfa3-bd {{ .Values.alfa3-bd.ports.containerPort }}; do sleep 1; done; nginx -g 'daemon off;'"]
       volumes:
         - name: nginx-conf
           hostPath:
             path: /nginx/appseed-app.conf
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: alfa3-env-config
+data:
+  DB_PG_HOST_NAME: postgres-headless
 ---
 apiVersion: v1
 kind: Service
