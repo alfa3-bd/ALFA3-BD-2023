@@ -1,7 +1,7 @@
 replicas: 1
 
 containers:
-  alfa3-bd:
+  alfa3bd:
     image:
       repository: projetoalfa/alfa3-bd
       tag: 1.1.0

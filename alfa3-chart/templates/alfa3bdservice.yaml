@@ -18,7 +18,7 @@ spec:
         - name: alfa3-bd
           image: {{ include "alfa3-bd.getImage" . }}
           ports:
-            - containerPort: {{ .Values.alfa3-bd.ports.containerPort }}
+            - containerPort: {{ .Values.alfa3bd.ports.containerPort }}
           env:
             - name: DB_PG_HOST_NAME
               valueFrom:
@@ -34,7 +34,7 @@ spec:
               mountPath: /etc/nginx/conf.d
               readOnly: true
           command: ["/bin/sh"]
-          args: ["-c", "until nc -z alfa3-bd {{ .Values.alfa3-bd.ports.containerPort }}; do sleep 1; done; nginx -g 'daemon off;'"]
+          args: ["-c", "until nc -z alfa3-bd {{ .Values.alfa3bd.ports.containerPort }}; do sleep 1; done; nginx -g 'daemon off;'"]
       volumes:
         - name: nginx-conf
           hostPath:
