@@ -15,7 +15,7 @@ CREATE TABLE ALUNO (
 
 -- Table: TIPO_ALUNO
 CREATE TABLE TIPO_ALUNO (
-    "tip_alu_id" INTEGER NOT NULL DEFAULT nextval('tipo_aluno_tip_alu_id_seq'),
+    "tip_alu_id" serial NOT NULL,
     "tip_alu_desc" VARCHAR NOT NULL,
     PRIMARY KEY ("tip_alu_id")
 );
@@ -106,7 +106,6 @@ CREATE TABLE UNIDADE_ESCOLAR (
     uni_nome varchar(255)  NOT NULL,
     cat_esc_id serial  NOT NULL,
     tip_esc_id serial  NOT NULL,
-    uni_depen_admin int  NOT NULL,
     ges_id int  NOT NULL,
     end_id int  NOT NULL,
     CONSTRAINT UNIDADE_ESCOLAR_pk PRIMARY KEY (uni_id)
@@ -163,7 +162,7 @@ CREATE TABLE TIPO_ESCOLA (
 CREATE TABLE TIPO_FRASE (
 	tip_frase_id serial NOT NULL,
 	tip_frase_desc varchar(255) NOT NULL,
-	CONSTRAINT TIPO_ESCOLA_pk PRIMARY KEY (tip_frase_id)
+	CONSTRAINT TIPO_FRASE_pk PRIMARY KEY (tip_frase_id)
 );
 
 -- foreign keys

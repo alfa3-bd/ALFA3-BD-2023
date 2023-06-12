@@ -37,7 +37,7 @@ services:
       - db_network
       - web_network
     volumes:
-      - ./ddl_scripts/01_create_tables.sql:/docker-entrypoint-initdb.d/ddl_script.sql
+      - ./ddl_scripts/alfa3bd.sql:/docker-entrypoint-initdb.d/alfa3bd.sql
   mongo:
     image: mongo
     restart: always

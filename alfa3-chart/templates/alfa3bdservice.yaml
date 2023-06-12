@@ -19,23 +19,34 @@ spec:
           image: {{ include "alfa3-bd.getImage" . }}
           ports:
             - containerPort: {{ .Values.alfa3-bd.ports.containerPort }}
-
+        - name: nginx
+          image: nginx:latest
+          ports:
+            - containerPort: 85
+          volumeMounts:
+            - name: nginx-conf
+              mountPath: /etc/nginx/conf.d
+              readOnly: true
+      volumes:
+        - name: nginx-conf
+          hostPath:
+            path: /nginx/appseed-app.conf
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: alfa3-bd
+  name: alfa3bd-service
   labels:
-    app: alfa3-bd
+    app: alfa3bd
 spec:
   type: LoadBalancer
   ports:
-  - port: {{ .Values.alfa3-bd.ports.containerPort }}
-    targetPort: {{ .Values.alfa3-bd.ports.containerPort }}
-    protocol: TCP
-    name: http
+    - port: 85
+      targetPort: 85
+      protocol: TCP
+      name: http
   selector:
-    app: alfa3-bd
+    app: alfa3bd
 
 ---
 apiVersion: autoscaling/v2

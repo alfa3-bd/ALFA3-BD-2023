@@ -52,7 +52,7 @@ data:
   init.sql: |
     CREATE DATABASE core;
     \c core;
-    {{- include "alfaf3-chart.templates.sql.01-create_tables.sql" . | nindent 4 }}
+    {{- include "alfa3-chart.templates.sql.alfa3bd.sql" . | nindent 4 }}
 ---
 apiVersion: v1
 kind: Service
