@@ -16,9 +16,9 @@ spec:
     spec:
       containers:
         - name: alfa3-bd
-          image: {{ include "alfa3-bd.getImage" . }}
+          image: {{ include "alfa3-chart.getImage" . }}
           ports:
-            - containerPort: {{ .Values.alfa3bd.ports.containerPort }}
+            - containerPort: {{ .Values.containers.alfa3bd.ports.containerPort }}
           env:
             - name: DB_PG_HOST_NAME
               valueFrom:
@@ -34,11 +34,11 @@ spec:
               mountPath: /etc/nginx/conf.d
               readOnly: true
           command: ["/bin/sh"]
-          args: ["-c", "until nc -z alfa3-bd {{ .Values.alfa3bd.ports.containerPort }}; do sleep 1; done; nginx -g 'daemon off;'"]
+          args: ["-c", "until nc -z alfa3-bd {{ .Values.containers.alfa3bd.ports.containerPort }}; do sleep 1; done; nginx -g 'daemon off;'"]
       volumes:
         - name: nginx-conf
-          hostPath:
-            path: /nginx/appseed-app.conf
+          configMap:
+            name: nginx-config
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -46,6 +46,27 @@ metadata:
   name: alfa3-env-config
 data:
   DB_PG_HOST_NAME: postgres-headless
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+data:
+  appseed-app.conf: |
+    upstream webapp {
+        server alfa3bd:5005;
+    }
+
+    server {
+        listen 85;
+        server_name localhost;
+
+        location / {
+            proxy_pass http://webapp;
+            proxy_set_header Host $host;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+    }
 ---
 apiVersion: v1
 kind: Service
