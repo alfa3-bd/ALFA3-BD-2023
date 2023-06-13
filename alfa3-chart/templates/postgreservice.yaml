@@ -52,7 +52,7 @@ data:
   init.sql: |
     CREATE DATABASE core;
     \c core;
-    {{- .Files.Get "sql/alfa3bd.sql" | indent 4 }}
+    {{- include "alfa3-chart.sql" . | indent 4 }}
 ---
 apiVersion: v1
 kind: Service
