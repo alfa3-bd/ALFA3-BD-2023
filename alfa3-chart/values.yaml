@@ -4,7 +4,7 @@ containers:
   alfa3bd:
     image:
       repository: projetoalfa/alfa3-bd
-      tag: 1.1.0
+      tag: 1.0.0
     ports:
       containerPort: 5005
 

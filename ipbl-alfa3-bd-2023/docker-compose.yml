@@ -5,6 +5,8 @@ services:
     restart: always
     env_file: .env
     build: .
+    ports:
+      - "5005:5005"
     depends_on:
       - postgres
       - mongo
