@@ -21,17 +21,7 @@ spec:
             - containerPort: {{ .Values.containers.alfa3bd.ports.containerPort }}
           env:
             - name: DB_PG_HOST_NAME
-              valueFrom:
-                configMapKeyRef:
-                  name: alfa3-env-config
-                  key: DB_PG_HOST_NAME
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: alfa3-env-config
-data:
-  DB_PG_HOST_NAME: postgres-headless
+              value: alfa3-bd-postgres
 ---
 apiVersion: v1
 kind: Service

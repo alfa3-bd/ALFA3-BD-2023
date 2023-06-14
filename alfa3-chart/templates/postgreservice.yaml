@@ -1,17 +1,19 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: postgres
+  name: alfa3-bd-postgres
+  labels:
+    app: alfa3-bd-postgres
 spec:
+  serviceName: alfa3-bd-postgres
+  replicas: 1
   selector:
     matchLabels:
-      app: postgres
-  serviceName: postgres-headless
-  replicas: 1
+      app: alfa3-bd-postgres
   template:
     metadata:
       labels:
-        app: postgres
+        app: alfa3-bd-postgres
     spec:
       containers:
       - name: postgres
@@ -47,9 +49,9 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: postgres-headless
+  name: alfa3-bd-postgres
   labels:
-    app: postgres-headless
+    app: alfa3-bd-postgres
 spec:
   type: ClusterIP
   ports:
@@ -58,4 +60,4 @@ spec:
       protocol: TCP
       name: postgres
   selector:
-    app: postgres-headless
+    app: alfa3-bd-postgres
