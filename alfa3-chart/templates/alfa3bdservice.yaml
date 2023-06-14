@@ -36,18 +36,17 @@ data:
 apiVersion: v1
 kind: Service
 metadata:
-  name: alfa3bd-service
-  labels:
-    app: alfa3bd
+  name: alfa3-bd-service
 spec:
   type: LoadBalancer
   ports:
-    - port: {{ .Values.containers.alfa3bd.ports.containerPort }}
+    - port: 80
       targetPort: {{ .Values.containers.alfa3bd.ports.containerPort }}
       protocol: TCP
       name: http
   selector:
-    app: alfa3bd
+    app: alfa3-bd
+
 ---
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
