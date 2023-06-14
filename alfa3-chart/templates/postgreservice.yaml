@@ -6,7 +6,7 @@ metadata:
     app: alfa3-bd-postgres
 spec:
   serviceName: alfa3-bd-postgres
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: alfa3-bd-postgres

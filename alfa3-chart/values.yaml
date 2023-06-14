@@ -1,4 +1,4 @@
-replicas: 1
+replicas: 3
 
 containers:
   alfa3bd:
