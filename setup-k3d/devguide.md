@@ -16,7 +16,7 @@ Ative sua env:
 
   - In windows
     ```bash
-    myenv/Scripts/activate.bat
+    env/Scripts/activate.bat
     ```
 
   - In macOS/Linux
@@ -159,7 +159,7 @@ O Helm é uma ferramenta de gerenciamento de pacotes para Kubernetes. Ela permit
 
     - Verifique se a instalação do Helm foi bem-sucedida executando o comando ```helm version``` em um terminal. Isso exibirá a versão do Helm instalada e confirmará que a instalação foi concluída com êxito.
 
-### Criar um cluster Kubernetes com o k3d:**
+### Criar um cluster Kubernetes com o k3d:
 
 - Execute o seguinte comando para criar um cluster Kubernetes com o k3d:
 
