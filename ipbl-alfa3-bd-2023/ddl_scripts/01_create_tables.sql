@@ -24,7 +24,7 @@ CREATE TABLE TIPO_ALUNO (
 CREATE TABLE AVALIACAO (
     ava_id serial  NOT NULL,
     tip_aval_id serial NOT NULL,
-    ava_data timestamp  NOT NULL,
+    ava_data timestamp,
     ava_nota numeric(10, 2),
     alu_id serial  NOT NULL,
     pro_id serial  NOT NULL,
@@ -35,7 +35,7 @@ CREATE TABLE AVALIACAO (
 CREATE TABLE COLETA (
     col_id serial  NOT NULL,
     col_audio varchar(256)  NOT NULL,
-    col_metrica real  NOT NULL,
+    col_metrica real,
     fra_id serial  NOT NULL,
     ava_id serial  NOT NULL,
     CONSTRAINT COLETA_pk PRIMARY KEY (col_id)

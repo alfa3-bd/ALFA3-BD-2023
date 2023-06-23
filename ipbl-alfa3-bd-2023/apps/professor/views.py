@@ -7,6 +7,7 @@ from django.http import HttpResponseRedirect
 from utils.CryptoHelper import CryptoHelper
 from random import randint
 from utils.CryptoHelper import CryptoHelper
+from utils.googledrive.GoogleDriveAccess import GoogleDriveAccess
 import core.models
 import os
 
@@ -108,6 +109,10 @@ def coleta(request,id):
                                               "JOIN professor AS pr ON pr.pro_id = tr.tur_id "+
                                               "WHERE al.alu_id = '"+str(id)+"' ")[0];
     
+    avaliacao = core.models.Avaliacao.objects.filter(aluno_id = id).select_related('coleta').count();
+
+    tipo_avaliacao = core.models.TipoAvaliacao.objects.all()
+    
     frases_tipo_1 = core.models.Frase.objects.filter(tipo_id = 1).select_related('tipo')
     frases_tipo_2 = core.models.Frase.objects.filter(tipo_id = 2).select_related('tipo')
     frases_tipo_3 = core.models.Frase.objects.filter(tipo_id = 3).select_related('tipo')
@@ -121,7 +126,9 @@ def coleta(request,id):
     context = {
         'segment': 'coleta',
         'aluno': aluno,
-        'frases': frases
+        'frases': frases,
+        'tipoAval':tipo_avaliacao,
+        'aval':avaliacao
     }
 
 
@@ -164,20 +171,9 @@ def view_audio_metrics(request,id):
 
     html_template = loader.get_template('professor/screens/audio_metrics.html')
     response = HttpResponse(html_template.render(context, request))
-    response.set_cookie('identificador_gestor', identificador)
+    response.set_cookie('identificador_professor', identificador)
 
     return response
-
-def getAudio(request):
-    if request.method == "POST":
-        if request.FILES.get("myAudio", False):
-            handleUploadFile(request.FILES["myAudio"])
-    return HttpResponse()
-
-def handleUploadFile(f):  
-    with open("C:/Temp/" + f.name, "wb+") as destination:  
-        for chunk in f.chunks():  
-            destination.write(chunk)
 
 def submit_audios(request):
 
@@ -191,21 +187,22 @@ def submit_audios(request):
     identificador = request.COOKIES.get('identificador_professor')
 
     if request.method == "POST":
-        if not os.path.isdir("C:/Temp"):
-            os.makedirs("C:/Temp")
-
+        new_aval = core.models.Avaliacao.objects.create(
+                    aluno = core.models.Aluno.objects.get(alu_id = request.POST["aluno_id"]),
+                    tipo = core.models.TipoAvaliacao.objects.get(tip_aval_id = request.POST["tipo_aval"]))
+        
         for i in range(1,4):
             f = "file{0}".format(i)
             if request.FILES.get(f, False):
-                files = request.FILES[f]
-                with open("C:/Temp/" + files.name, "wb+") as destination:  
-                    for chunk in files.chunks():  
-                        destination.write(chunk)
-        
-        aluno_id = request.POST["aluno_id"]
-        frase1 = request.POST["frase1"]
-        frase2 = request.POST["frase2"]
-        frase3 = request.POST["frase3"]
+                file = request.FILES[f]
+                frase = "frase{0}".format(i)
+                google_drive = GoogleDriveAccess()
+
+                if(google_drive.upload_file(file.name,file)):
+                    core.models.Coleta.objects.create(col_audio = file.name,
+                                                    avaliacao = core.models.Avaliacao.objects.get(ava_id = new_aval.ava_id),
+                                                    frase = core.models.Frase.objects.get(fra_id = request.POST[frase]))
+                    
         
     response = redirect('/professor/turmas', context)
     response.set_cookie('identificador_professor', identificador)

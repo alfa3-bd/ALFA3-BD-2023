@@ -11,6 +11,7 @@ document.querySelector("#submitAudios").addEventListener("click", (event) =>{
     data.append("frase1",document.querySelector("#frase1").value)
     data.append("frase2",document.querySelector("#frase2").value)
     data.append("frase3",document.querySelector("#frase3").value)
+    data.append("tipo_aval",document.querySelector("#tipo_aval").value)
     
     audios.forEach((element,i) => {
       file_name = `aluno${aluno}_audio${i+1}.wav`
@@ -27,6 +28,9 @@ document.querySelector("#submitAudios").addEventListener("click", (event) =>{
 });
  
 async function sendAudio(dados) {
+  
+  document.querySelector('.new-spinner').style.visibility = 'visible';
+
   const response = await fetch('/professor/submit_audios', {
     method: 'POST',
     headers: {
@@ -37,8 +41,10 @@ async function sendAudio(dados) {
   .then(response => {
     if (response.ok) {
       console.log('Dados enviados com sucesso!');
+      window.location.href = "/professor/turmas"
     } else {
-      console.log('Ocorreu um erro ao enviar os dados.');
+      document.querySelector('.new-spinner').style.visibility = 'hidden';
+      alert('Ocorreu um erro ao enviar os dados.');
     }
   })
   .catch(error => {

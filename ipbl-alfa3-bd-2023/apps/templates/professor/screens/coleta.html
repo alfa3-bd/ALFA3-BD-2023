@@ -23,16 +23,32 @@
                                 <p class="text-dark mb-1">Professor</p>
                                 <p>{{ aluno.pro_primeiro_nome }} {{ aluno.pro_segundo_nome }}</p>
                             </div>
+                            {% if aval == 0 %}
                             <div id="msg"></div>
-
+                            <div class="new-spinner" style="visibility: hidden;">
+                                <img class="rounded-circle"  style="width:200px;z-index: 9999; position: absolute;margin-left: auto; margin-right: auto;left: 0; right: 0;text-align: center;" src="/static/assets/images/slider/spinner.gif" >
+                            </div>
                             <div class="card-block px-0 py-3">
                                 <div class="table-responsive">
                                     <form id="audioForm" onsubmit="return submitFunction(event)">
+                                    
                                     <table class="table table-hover">
                                         <tbody>
                                             <tr>
                                                 <td colspan="2">
-                                                    <h6 class="mb-1">Frase Simples</h6>  
+                                                    <div class="form-group">
+                                                        <label for="exampleFormControlSelect1">Tipo de Avaliação:</label>
+                                                        <select class="form-control" name="tipo_aval" id="tipo_aval" style="width:400px">
+                                                            {% for aval in tipoAval %}
+                                                            <option value="{{aval.tip_aval_id}}">{{aval.tip_aval_desc}}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <h6 class="mb-1">Palavras Aleatórias</h6>  
                                                     <p class="m-0">{{ frases.tipo_1.fra_frase }}</p>
                                                 </td>
                                             </tr>
@@ -54,7 +70,7 @@
                                             </tr>
                                             <tr>
                                                 <td colspan="2">
-                                                    <h6 class="mb-1">Frase Complexas</h6>  
+                                                    <h6 class="mb-1">Pseudo Palavras</h6>  
                                                     <p class="m-0">{{ frases.tipo_2.fra_frase }}</p>
                                                 </td>
                                             </tr>
@@ -76,7 +92,7 @@
                                             </tr>
                                             <tr>
                                                 <td colspan="2">
-                                                    <h6 class="mb-1">Frase Palavras</h6>  
+                                                    <h6 class="mb-1">Palavras Simples</h6>  
                                                     <p class="m-0">{{ frases.tipo_3.fra_frase }}</p>
                                                 </td>
                                             </tr>
@@ -112,6 +128,12 @@
                                 </form>
                                 </div>
                             </div>
+                            {% else %}
+                                <div class="card Recent-Users">
+                                    <div class="card-header">
+                                    <h5>Audio deste aluno já foi coletado.</h5>
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
                     <!--[ Recent Users ] end-->

@@ -152,16 +152,16 @@ CREATE TABLE IF NOT EXISTS "professor" (
 -- Copiando dados para a tabela public.professor: 10 rows
 /*!40000 ALTER TABLE "professor" DISABLE KEYS */;
 INSERT INTO "professor" ("pro_id", "pro_identificador", "pro_primeiro_nome", "pro_segundo_nome", "pro_senha") VALUES
-	(1, '555-12-3456', 'Royall', 'Adams', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA=='),
-	(2, '321-98-7654', 'Shawna', 'Parslow', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA=='),
-	(3, '876-54-3210', 'Blanca', 'Shotton', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA=='),
-	(4, '321-98-7852', 'Guillermo', 'Belf', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA=='),
-	(5, '321-98-7896', 'Sayre', 'Wisker', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA=='),
-	(6, '789-01-2345', 'Melodie', 'Keggins', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA=='),
-	(7, '234-56-7890', 'Nicky', 'Ivey', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA=='),
-	(8, '012-34-5678', 'Moria', 'Tilliards', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA=='),
-	(9, '987-65-4321', 'Jake', 'Austing', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA=='),
-	(10, '876-54-3210', 'Joelynn', 'Rodie', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA==');
+	(1, '999.999.999-99', 'Royall', 'Adams', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA=='),
+	(2, '321.987.654-99', 'Shawna', 'Parslow', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA=='),
+	(3, '876.543.210-99', 'Blanca', 'Shotton', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA=='),
+	(4, '321.987.852-99', 'Guillermo', 'Belf', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA=='),
+	(5, '321.987.896-99', 'Sayre', 'Wisker', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA=='),
+	(6, '789.012.345-99', 'Melodie', 'Keggins', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA=='),
+	(7, '234.567.890-99', 'Nicky', 'Ivey', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA=='),
+	(8, '012.345.678-99', 'Moria', 'Tilliards', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA=='),
+	(9, '987.654.321-99', 'Jake', 'Austing', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA=='),
+	(10, '876.548.321-90', 'Joelynn', 'Rodie', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA==');
 /*!40000 ALTER TABLE "professor" ENABLE KEYS */;
 
 -- Copiando estrutura para tabela public.gestor_admin
@@ -318,7 +318,7 @@ INSERT INTO "aluno" ("alu_id", "alu_primeiro_nome", "alu_segundo_nome", "alu_dat
 -- Copiando estrutura para tabela public.avaliacao
 CREATE TABLE IF NOT EXISTS "avaliacao" (
 	"ava_id" SERIAL NOT NULL,
-	"ava_data" TIMESTAMP NOT NULL,
+	"ava_data" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	"ava_nota" NUMERIC(10,2) NULL DEFAULT NULL,
 	"alu_id" SERIAL NOT NULL,
 	"ava_tipo" INTEGER NOT NULL,
@@ -352,7 +352,7 @@ INSERT INTO "avaliacao" ("ava_id", "ava_data", "ava_nota", "alu_id", "ava_tipo")
 CREATE TABLE IF NOT EXISTS "coleta" (
 	"col_id" SERIAL NOT NULL,
 	"col_audio" VARCHAR(256) NOT NULL,
-	"col_metrica" REAL NOT NULL,
+	"col_metrica" REAL NULL,
 	"fra_id" SERIAL NOT NULL,
 	"ava_id" SERIAL NOT NULL,
 	PRIMARY KEY ("col_id"),
