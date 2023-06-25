@@ -204,7 +204,9 @@ O Helm é uma ferramenta de gerenciamento de pacotes para Kubernetes. Ela permit
 
     # Dockerizing no Apache Spark Standalone Cluster
 
-### Link de referência:  <a href="https://medium.com/geekculture/dockerizing-an-apache-spark-standalone-cluster-eeb7d3f8efeb">Dockerizing an Apache Spark Standalone Cluster</a>
+### Link de referência 1:  <a href="https://medium.com/geekculture/dockerizing-an-apache-spark-standalone-cluster-eeb7d3f8efeb">Dockerizing an Apache Spark Standalone Cluster</a>
+
+### Link de referência 2:  <a href="https://docs.google.com/document/d/1uFveRu1ab2UVnUuq_dAPZ49Sed6vw6jqHIOsepAQWvc/edit?pli=1">Instalação Spark on Windows</a>
 
 ## Small Big Data ecosystem with In-Memory Processing
 
