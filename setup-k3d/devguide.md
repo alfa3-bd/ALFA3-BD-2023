@@ -240,28 +240,24 @@ ver docker image aqui: <a  href="https://hub.docker.com/u/wittline"> wittline</a
 O Apache Spark gerencia todas as complexidades de criar e gerenciar exibições globais e com escopo de sessão e tabelas SQL gerenciadas e não gerenciadas, na memória e no disco, e o SparkSQL é um dos principais componentes do Apache Spark, integrando o processamento relacional com a programação funcional do Spark. O Apache Spark por padrão usa o metastore Apache Hive, localizado em user/hive/warehouse, para persistir todos os metadados sobre as tabelas criadas. O Apache Spark não precisa do Hive, a ideia de adicionar o hive a essa arquitetura é ter um armazenamento de metadados sobre tabelas e views que possam ser reutilizados em uma carga de trabalho e assim evitar o uso de recriação de consultas para essas tabelas. Por exemplo: Uma exibição temporária global é visível em vários SparkSessions, nesse caso, podemos combinar dados de diferentes SparkSessions que não compartilham o mesmo metastore hive. O data warehouse Hive facilita a leitura, gravação e gerenciamento de grandes conjuntos de dados no armazenamento HDFS usando SQL
 
 
-## How to run the docker environment
-- Install Docker Desktop on Windows, it will install Docker Compose as well, Docker Compose will allow you to run multiple container applications
-Install git-bash for windows, once installed , open git bash and download the below repository, this will download all the files needed.
-
 ``` 
 ramse@DESKTOP-K6K6E5A MINGW64 /c
 $ git clone https://github.com/Wittline/apache-spark-docker.git
 ```
 
-- once inside the folder use the below comman, this will install all the images from the docker-compose file and will setup all the containers, This will take some time.
 
 ```
 ramse@DESKTOP-K6K6E5A MINGW64 /c/apache-spark-docker/docker
 $ winpty docker-compose up -d
 ```
 
-- When everything is finished, you will see the name of all the containers with the status done
-- Now go to jupyterlab, using the url: http://localhost:8889/, this will open a new tab, enjoy writing your pyspark code.
-- Go to Hue using the url: http://localhost:8888/, and check your tables in HDFS
+- Quando tudo terminar, você verá o nome de todos os contêineres com o status feito.
+- Agora vá para jupyterlab, usando a url: http://localhost:8889/, isso abrirá uma nova guia, aproveite para escrever seu código pyspark.
+- Vá para Hue usando a url: http://localhost:8888/ e verifique suas tabelas no HDFS
 
 ## Contributing and Feedback
-Any ideas or feedback about this repository?. Help me to improve it.
+
+Alguma ideia ou feedback sobre este repositório? Ajudenos a melhorá-lo.
 
 
 ## License
