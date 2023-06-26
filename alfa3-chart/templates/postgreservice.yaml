@@ -33,6 +33,13 @@ spec:
         - name: init-scripts
           mountPath: /docker-entrypoint-initdb.d
           readOnly: true
+        resources:
+            limits:
+              cpu: "2"
+              memory: "4Gi"
+            requests:
+              cpu: "1"
+              memory: "2Gi"
       volumes:
       - name: init-scripts
         configMap:
