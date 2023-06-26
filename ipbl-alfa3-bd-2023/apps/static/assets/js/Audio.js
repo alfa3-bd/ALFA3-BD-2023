@@ -19,7 +19,7 @@ document.querySelector("#submitAudios").addEventListener("click", (event) =>{
       data.append(file_seq,element,file_name)
     });
 
-    sendAudio(data)
+    sendAudio(data,aluno)
 
   }else{
     alert("Ainda faltam audios a serem gravados.")
@@ -27,8 +27,8 @@ document.querySelector("#submitAudios").addEventListener("click", (event) =>{
   
 });
  
-async function sendAudio(dados) {
-  
+async function sendAudio(dados,aluno) {
+  document.querySelector("#submitAudios").style.visibility = 'hidden';
   document.querySelector('.new-spinner').style.visibility = 'visible';
 
   const response = await fetch('/professor/submit_audios', {
@@ -41,7 +41,7 @@ async function sendAudio(dados) {
   .then(response => {
     if (response.ok) {
       console.log('Dados enviados com sucesso!');
-      window.location.href = "/professor/turmas"
+      window.location.href = "/professor/coleta/"+aluno
     } else {
       document.querySelector('.new-spinner').style.visibility = 'hidden';
       alert('Ocorreu um erro ao enviar os dados.');

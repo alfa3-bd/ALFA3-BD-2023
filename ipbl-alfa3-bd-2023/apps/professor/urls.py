@@ -15,6 +15,7 @@ urlpatterns = [
     path('alunos/<int:id>', views.alunos, name='professor'),
 
     path('coleta/<int:id>', views.coleta, name='professor'),
+    path('refazer_coleta/<int:id>', views.refazer_coleta, name='professor'),
     path('submit_audios', views.submit_audios, name='professor'),
 
     path('banco_frases', views.banco_frases, name='professor'),

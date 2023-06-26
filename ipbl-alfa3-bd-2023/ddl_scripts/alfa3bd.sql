@@ -197,7 +197,7 @@ CREATE TABLE IF NOT EXISTS "gestor_escola" (
 -- Copiando dados para a tabela public.gestor_escola: 4 rows
 /*!40000 ALTER TABLE "gestor_escola" DISABLE KEYS */;
 INSERT INTO "gestor_escola" ("ges_id", "ges_identificador", "ges_primeiro_nome", "ges_segundo_nome", "ges_senha", "ges_ges_id") VALUES
-	(1, '119.876.543-21', 'João', 'Silva ', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA==', 1),
+	(1, '999.999.999-99', 'João', 'Silva ', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA==', 1),
 	(2, '119.876.543-22', 'Pedro', 'Almeida', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA==', 3),
 	(3, '119.012.345-67', 'Maria', 'Santos ', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA==', 2),
 	(4, '119.012.345-68', 'Ana', 'Oliveira', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA==', 1);

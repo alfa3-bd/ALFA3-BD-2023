@@ -3,7 +3,19 @@
 {% block title %} Coleta {% endblock %}
 
 <!-- Specific CSS goes HERE -->
-{% block stylesheets %}{% endblock stylesheets %}
+{% block stylesheets %}
+<style>
+.loader {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url('/static/assets/images/slider/spinner.gif') 50% 50% no-repeat;
+}
+</style>
+{% endblock stylesheets %}
 
 {% block content %}
 
@@ -26,7 +38,7 @@
                             {% if aval == 0 %}
                             <div id="msg"></div>
                             <div class="new-spinner" style="visibility: hidden;">
-                                <img class="rounded-circle"  style="width:200px;z-index: 9999; position: absolute;margin-left: auto; margin-right: auto;left: 0; right: 0;text-align: center;" src="/static/assets/images/slider/spinner.gif" >
+                                <img class="rounded-circle loader"  src="" >
                             </div>
                             <div class="card-block px-0 py-3">
                                 <div class="table-responsive">
@@ -132,6 +144,7 @@
                                 <div class="card Recent-Users">
                                     <div class="card-header">
                                     <h5>Audio deste aluno já foi coletado.</h5>
+                                    <a href="/professor/refazer_coleta/{{aluno.alu_id}}" class="btn btn-danger" style="font-size:12px">Refazer Analise</a> 
                                 </div>
                             {% endif %}
                         </div>

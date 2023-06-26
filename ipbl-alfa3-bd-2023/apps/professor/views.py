@@ -1,15 +1,14 @@
 from django.http import HttpResponse
 from django.template import loader
 from django.shortcuts import redirect
-from django.core.files.storage import default_storage
-from django.core.files.base import ContentFile
 from django.http import HttpResponseRedirect
 from utils.CryptoHelper import CryptoHelper
 from random import randint
-from utils.CryptoHelper import CryptoHelper
 from utils.googledrive.GoogleDriveAccess import GoogleDriveAccess
+from utils.ML.SpeechLearning import SpeechLearning
 import core.models
-import os
+import threading
+import datetime
 
 def login(request):
     context = {
@@ -138,6 +137,31 @@ def coleta(request,id):
 
     return response
 
+def refazer_coleta(request,id):
+
+    identificador = request.COOKIES.get('identificador_professor')
+
+    avaliacao = core.models.Avaliacao.objects.filter(aluno_id = id)
+    coletas = core.models.Coleta.objects.filter(avaliacao_id = avaliacao[0].ava_id)
+    google_drive = GoogleDriveAccess()
+
+    for coleta in coletas:
+        google_drive.delete_file(coleta.col_audio)
+        col = core.models.Coleta.objects.get(col_id = coleta.col_id)
+        col.delete()
+
+    aval = core.models.Avaliacao.objects.get(ava_id = avaliacao[0].ava_id)
+    aval.delete()
+
+    context = {
+        'segment': 'informacoes'
+    }
+
+    response = redirect('/professor/coleta/'+ str(id), context)
+    response.set_cookie('identificador_professor', identificador)
+
+    return response
+
 def view_audio_metrics(request,id):
 
     identificador = request.COOKIES.get('identificador_professor')
@@ -153,7 +177,7 @@ def view_audio_metrics(request,id):
                                               "WHERE al.alu_id = '"+str(id)+"' ")[0];
     
     avaliacoes = core.models.Avaliacao.objects.raw("SELECT al.ava_id, al.ava_data, al.ava_nota, ta.tip_aval_desc, "+
-                                                   "fr.fra_frase, tf.tip_frase_desc "+
+                                                   "fr.fra_frase, tf.tip_frase_desc, cl.col_metrica "+
                                                    "FROM coleta AS cl "+
                                                    "JOIN avaliacao AS al ON cl.ava_id = al.ava_id "+
                                                    "JOIN tipo_avaliacao AS ta ON ta.tip_aval_id = al.ava_tipo "+
@@ -177,8 +201,6 @@ def view_audio_metrics(request,id):
 
 def submit_audios(request):
 
-    crypto = CryptoHelper()
-
     context = {
         'segment': 'turmas',
         'err':''
@@ -189,6 +211,7 @@ def submit_audios(request):
     if request.method == "POST":
         new_aval = core.models.Avaliacao.objects.create(
                     aluno = core.models.Aluno.objects.get(alu_id = request.POST["aluno_id"]),
+                    ava_data = datetime.datetime.now(),
                     tipo = core.models.TipoAvaliacao.objects.get(tip_aval_id = request.POST["tipo_aval"]))
         
         for i in range(1,4):
@@ -203,9 +226,18 @@ def submit_audios(request):
                                                     avaliacao = core.models.Avaliacao.objects.get(ava_id = new_aval.ava_id),
                                                     frase = core.models.Frase.objects.get(fra_id = request.POST[frase]))
                     
-        
-    response = redirect('/professor/turmas', context)
-    response.set_cookie('identificador_professor', identificador)
+                    frase_texto = core.models.Frase.objects.get(fra_id = request.POST[frase])
+
+                    if google_drive.get_file_drive(file.name) != False :
+                        speech = SpeechLearning()
+                        thread = threading.Thread(target=speech.analyze_audio(file.name,frase_texto.fra_frase))
+                        thread.start()
+                    else:
+                        print("Nao foi possivel analizar o arquivo")
+
+        aluno = core.models.Aluno.objects.get(alu_id = request.POST["aluno_id"])
+        response = redirect('/professor/alunos/'+ str(aluno.turma.tur_id), context)
+        response.set_cookie('identificador_professor', identificador)
 
     return response
 

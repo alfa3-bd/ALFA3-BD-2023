@@ -32,7 +32,7 @@
                             <div class="card Recent-Users">
                                 <div class="card-header">
                                     <h5 style="margin-bottom: 20px;"><b>{{avaliacao.tip_aval_desc}}</b> | Teste realizado em {{avaliacao.ava_data|date:"d/m/Y"}}</h5>
-                                    <p style="float:right;font-size:12px;" class="badge badge-success">Resultado: {{avaliacao.ava_nota|floatformat:2 }}</p>
+                                    <p style="float:right;font-size:12px;" class="badge badge-success">Resultado: {{avaliacao.col_metrica|floatformat:2 }}%</p>
                                     <p class="mb-1 muted">Frase: <em>{{avaliacao.fra_frase}}</em></p>
                                     <p class="mb-1 muted"><small>Métrica da coleta tipo: <b>{{avaliacao.tip_frase_desc}}</b></small></p>
                                 </div>
