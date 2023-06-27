@@ -6,7 +6,7 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 
 options = webdriver.ChromeOptions()
 options.add_argument('--no-sandbox')
-options.add_argument('--headless')
+#options.add_argument('--headless')
 options.add_argument('--disable-gpu')
 
 options.set_capability("goog:loggingPrefs", {'performance': 'ALL'})

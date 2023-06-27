@@ -427,3 +427,20 @@ JOIN gestor_escola AS ge ON ge.ges_id = tr.uni_id
 JOIN tipo_aluno AS ta ON ta.tip_alu_id = al.tip_alu
 JOIN professor AS pr ON pr.pro_id = tr.pro_id;
 COMMIT;
+---------------------------------------------------------------------------------------------------------------------
+-- PROCEDURE
+---------------------------------------------------------------------------------------------------------------------
+CREATE OR REPLACE FUNCTION update_nota_avaliacao()
+RETURNS trigger AS 
+'BEGIN
+UPDATE avaliacao SET ava_data = CURRENT_TIMESTAMP, ava_nota = (SELECT avg(col_metrica) FROM coleta WHERE ava_id = NEW.ava_id) WHERE ava_id = NEW.ava_id;
+RETURN NEW;
+END;'
+LANGUAGE plpgsql;
+---------------------------------------------------------------------------------------------------------------------
+-- TRIGGER
+---------------------------------------------------------------------------------------------------------------------
+CREATE TRIGGER coleta_trigger
+AFTER INSERT ON coleta
+FOR EACH ROW
+EXECUTE PROCEDURE update_nota_avaliacao();

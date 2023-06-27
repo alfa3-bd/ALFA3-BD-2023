@@ -2,7 +2,6 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
-from pymongo import MongoClient
 
 username = "119.876.543-22"
 password = "123"
@@ -11,7 +10,7 @@ pages = ["professores","alunos"]
 driver = webdriver.Chrome("chromedriver")
 options = webdriver.ChromeOptions()
 options.add_argument('--no-sandbox')
-options.add_argument('--headless')
+#options.add_argument('--headless')
 options.add_argument('--disable-gpu')
 
 service = ChromeService(executable_path='/usr/local/bin/chromedriver')
@@ -43,6 +42,7 @@ def add(page):
     if page in "alunos":      
         driver.find_element("name", "fst_name_aluno").send_keys("Joaquim")
         driver.find_element("name", "scn_name_aluno").send_keys("Silveira")
+        driver.find_element("name", "date_nasc_aluno").send_keys("10/05/2015")
         driver.find_element("name", "tipo").send_keys(1)
         driver.find_element("name", "turma").send_keys(1)
         driver.find_element(By.XPATH,"//button[@type='submit']").click()        
@@ -57,7 +57,7 @@ def add(page):
         lambda x: x.execute_script("return document.readyState === 'complete'")
     )
 
-    msg = driver.find_element(By.CSS_SELECTOR,"H5").get_attribute("innerHTML")
+    msg = driver.find_element(By.CSS_SELECTOR,".card-header").get_attribute("innerHTML")
      
     return msg.lower()
 
