@@ -95,7 +95,7 @@ Para o Ministério da Educação e Cultura (MEC) do Brasil e as Instituições e
 
 <figure>
   <div align="center">
-    <img src="images/planejamento.png" alt="Alt Text" style="display: block; margin-left: auto; margin-right: auto; max-width: 80%;">
+    <img src="images/planejamento.png" alt="Alt Text">
     <figcaption >Figura 2: Planejamento do Desenvolvimento.</figcaption>
   </div>
 </figure>
@@ -104,7 +104,7 @@ Para o Ministério da Educação e Cultura (MEC) do Brasil e as Instituições e
 
 <figure>
   <div align="center">
-    <img src="images/modelo_conceitual.png" alt="Alt Text" style="display: block; margin-left: auto; margin-right: auto; max-width: 80%;">
+    <img src="images/modelo_conceitual.png" alt="Alt Text">
     <figcaption >Figura 3: Modelo Conceitual.</figcaption>
   </div>
 </figure>
