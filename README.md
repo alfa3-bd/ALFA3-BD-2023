@@ -1,4 +1,5 @@
 ### **I - INTRODUÇÃO**
+
 **1.1. Motivação**
  - **1.1.1 - Time Scrum 1**
     <br/>
@@ -77,3 +78,42 @@
     |![Story](https://user-images.githubusercontent.com/89356780/229957815-ea747c93-b861-40c7-8a2d-bc43c1b2973a.svg) US1311 Integração da IA com o aplicativo Back-end                                                            |**COMO PO, DESEJO** realizar a integração da IA com o aplicativo back-end do projeto ALFA3-BD **PARA** realizar a análise de fluência na alfabetização dos áudios capturados    |
 
 ### **II – DESENVOLVIMENTO**
+**2.1. Objetivo**
+Apresentar as inovações propostas no 1° semestre de 2023 pelos times de desenvolvimento envolvidos nas disciplinas CE-240, CE-245 e CE-229 para o projeto ALFA3-BD no que concerne à Arquitetura.
+
+**2.2. Visão Geral**
+Para o Ministério da Educação e Cultura (MEC) do Brasil e as Instituições envolvidas com alfabetização de alunos do ensino fundamental, que vêm sendo consideradas relevantes para o Programa Mais Alfabetização, o Projeto ALFA3-BD representa uma iniciativa acadêmica de se dotar o ensino fundamental brasileiro de um sistema computadorizado apropriado para diagnóstico, correção e aumento dos níveis atuais de alfabetização no país.
+
+<figure>
+  <div align="center">
+    <img src="images/fluxo_de_audio.png" alt="Alt Text" style="display: block; margin-left: auto; margin-right: auto; max-width: 80%;">
+    <figcaption >Figura 1: Fluxo de Coleta de Áudio.</figcaption>
+  </div>
+</figure>
+
+**2.3. Planejamento do Desenvolvimento (Sprints ALFA3-BD)**
+
+<figure>
+  <div align="center">
+    <img src="images/planejamento.png" alt="Alt Text" style="display: block; margin-left: auto; margin-right: auto; max-width: 80%;">
+    <figcaption >Figura 2: Planejamento do Desenvolvimento.</figcaption>
+  </div>
+</figure>
+
+**2.4. Modelo Conceitual**
+
+<figure>
+  <div align="center">
+    <img src="images/modelo_conceitual.png" alt="Alt Text" style="display: block; margin-left: auto; margin-right: auto; max-width: 80%;">
+    <figcaption >Figura 3: Modelo Conceitual.</figcaption>
+  </div>
+</figure>
+
+**2.5. Arquitetura Cluster Kubernetes**
+
+<figure>
+  <div align="center">
+    <img src="images/ALFA3-BD.drawio.png" alt="Alt Text" style="display: block; margin-left: auto; margin-right: auto; max-width: 80%;">
+    <figcaption >Figura 4: Cluster k8s.</figcaption>
+  </div>
+</figure>
