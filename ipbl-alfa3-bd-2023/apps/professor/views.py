@@ -32,23 +32,27 @@ def verify_login(request):
         'err':''
     }
 
-    if len(request.POST['identificador_professor']):
+    try:
 
-        data = request.POST
-        professor = core.models.Professor.objects.get(pro_identificador = data['identificador_professor'])
+        if len(request.POST['identificador_professor']):
 
-        if len(professor.pro_identificador) and (crypto.decrypt_message(professor.pro_senha) == data['senha_professor']):
+            data = request.POST
+            professor = core.models.Professor.objects.get(pro_identificador = data['identificador_professor'])
 
-            context = {
-                'segment': 'home',
-                'err':''
-            }
+            if len(professor.pro_identificador) and (crypto.decrypt_message(professor.pro_senha) == data['senha_professor']):
 
-            response = redirect('/professor/home', context)
-            response.set_cookie('identificador_professor', professor.pro_identificador)
-            return response
+                context = {
+                    'segment': 'home',
+                    'err':''
+                }
 
-    return redirect('/professor/login', context)
+                response = redirect('/professor/home', context)
+                response.set_cookie('identificador_professor', professor.pro_identificador)
+                return response
+
+        return redirect('/professor/login', context)
+    except:
+        return redirect('/professor/login', context)
 
 def home(request):
     context = {

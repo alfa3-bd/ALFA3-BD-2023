@@ -27,23 +27,28 @@ def verify_login(request):
         'err':''
     }
 
-    if len(request.POST['identificador_gestor']):
+    try:
 
-        data = request.POST
-        gestor = core.models.GestorEscola.objects.get(ges_identificador = data['identificador_gestor'])
+        if len(request.POST['identificador_gestor']):
 
-        if len(gestor.ges_identificador) and (crypto.decrypt_message(gestor.ges_senha) == data['senha_gestor']):
+            data = request.POST
+            gestor = core.models.GestorEscola.objects.get(ges_identificador = data['identificador_gestor'])
 
-            context = {
-                'segment': 'home',
-                'err':''
-            }
+            if len(gestor.ges_identificador) and (crypto.decrypt_message(gestor.ges_senha) == data['senha_gestor']):
 
-            response = redirect('/gestor/home', context)
-            response.set_cookie('identificador_gestor', gestor.ges_identificador)
-            return response
+                context = {
+                    'segment': 'home',
+                    'err':''
+                }
 
-    return redirect('/gestor/login', context)
+                response = redirect('/gestor/home', context)
+                response.set_cookie('identificador_gestor', gestor.ges_identificador)
+                return response
+
+        return redirect('/gestor/login', context)
+    
+    except:
+        return redirect('/gestor/login', context)
 
 def home(request):
 
