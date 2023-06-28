@@ -9,6 +9,12 @@ spec:
   selector:
     matchLabels:
       app: alfa3-bd
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+  progressDeadlineSeconds: 300
+  minReadySeconds: 30
   template:
     metadata:
       labels:
