@@ -413,6 +413,7 @@ SELECT setval(pg_get_serial_sequence('"avaliacao"','ava_id'), coalesce(max("ava_
 SELECT setval(pg_get_serial_sequence('"coleta"','col_id'), coalesce(max("col_id"), 1), max("col_id") IS NOT null) FROM "coleta";
 COMMIT;
 
+--ALUNOS E PROFESSORES
 ---------------------------------------------------------------------------------------------------------------------
 -- VIEWS
 ---------------------------------------------------------------------------------------------------------------------
@@ -444,3 +445,36 @@ CREATE TRIGGER coleta_trigger
 AFTER INSERT ON coleta
 FOR EACH ROW
 EXECUTE PROCEDURE update_nota_avaliacao();
+
+--ESCOLAS E INFRAESTRUTURA
+---------------------------------------------------------------------------------------------------------------------
+-- VIEWS
+---------------------------------------------------------------------------------------------------------------------
+-- CHAMADA DA VIEW
+CREATE VIEW view_escolas AS 
+SELECT ue.uni_id,ue.uni_codigo_inep,ue.uni_nome,ce.cat_escola_desc,ed.end_rua,ed.end_numero,
+ed.end_cep,cd.cid_nome,cd.cid_uf,ge.ges_identificador,ge.ges_primeiro_nome,ge.ges_segundo_nome 
+FROM unidade_escolar AS ue
+JOIN tipo_escola AS te ON te.tip_escola_id = ue.tip_esc
+JOIN categoria_escolar AS ce ON ce.cat_escola_id = ue.cat_esc
+JOIN endereco AS ed ON ed.end_id = ue.end_id
+JOIN cidade AS cd ON cd.cid_id = ed.cid_id
+JOIN gestor_escola AS ge ON ge.ges_id = ue.ges_id
+COMMIT;
+---------------------------------------------------------------------------------------------------------------------
+-- PROCEDURE
+---------------------------------------------------------------------------------------------------------------------
+CREATE OR REPLACE FUNCTION update_escola()
+RETURNS trigger AS 
+'BEGIN
+UPDATE unidade_escolar SET uni_nome = trim(NEW.uni_nome) WHERE uni_id = NEW.uni_id;
+RETURN NEW;
+END;'
+LANGUAGE plpgsql;
+---------------------------------------------------------------------------------------------------------------------
+-- TRIGGER
+---------------------------------------------------------------------------------------------------------------------
+CREATE TRIGGER escola_trigger
+AFTER INSERT ON unidade_escolar
+FOR EACH ROW
+EXECUTE PROCEDURE update_escola();
