@@ -459,7 +459,7 @@ JOIN tipo_escola AS te ON te.tip_escola_id = ue.tip_esc
 JOIN categoria_escolar AS ce ON ce.cat_escola_id = ue.cat_esc
 JOIN endereco AS ed ON ed.end_id = ue.end_id
 JOIN cidade AS cd ON cd.cid_id = ed.cid_id
-JOIN gestor_escola AS ge ON ge.ges_id = ue.ges_id
+JOIN gestor_escola AS ge ON ge.ges_id = ue.ges_id;
 COMMIT;
 ---------------------------------------------------------------------------------------------------------------------
 -- PROCEDURE

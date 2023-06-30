@@ -15,10 +15,10 @@ CMD ["gunicorn", "--config", "gunicorn-cfg.py", "core.wsgi"]
 
 # docker logout
 
-# docker build -t alfa3-bd:1.0.1 .
+# docker build -t alfa3-bd:1.0.2 .
 
-# docker tag alfa3-bd:1.0.1 projetoalfa/alfa3-bd:1.0.1
+# docker tag alfa3-bd:1.0.2 projetoalfa/alfa3-bd:1.0.2
 
 # docker login 
 
-# docker push projetoalfa/alfa3-bd:1.0.1
+# docker push projetoalfa/alfa3-bd:1.0.2
