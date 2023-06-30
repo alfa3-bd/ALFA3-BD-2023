@@ -122,16 +122,16 @@ data:
     );
 
     INSERT INTO "professor" ("pro_id", "pro_identificador", "pro_primeiro_nome", "pro_segundo_nome", "pro_senha") VALUES
-      (1, '555-12-3456', 'Royall', 'Adams', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA=='),
-      (2, '321-98-7654', 'Shawna', 'Parslow', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA=='),
-      (3, '876-54-3210', 'Blanca', 'Shotton', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA=='),
-      (4, '321-98-7852', 'Guillermo', 'Belf', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA=='),
-      (5, '321-98-7896', 'Sayre', 'Wisker', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA=='),
-      (6, '789-01-2345', 'Melodie', 'Keggins', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA=='),
-      (7, '234-56-7890', 'Nicky', 'Ivey', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA=='),
-      (8, '012-34-5678', 'Moria', 'Tilliards', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA=='),
-      (9, '987-65-4321', 'Jake', 'Austing', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA=='),
-      (10, '876-54-3210', 'Joelynn', 'Rodie', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA==');
+      (1, '999.999.999-99', 'Royall', 'Adams', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA=='),
+      (2, '321.987.654-99', 'Shawna', 'Parslow', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA=='),
+      (3, '876.543.210-99', 'Blanca', 'Shotton', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA=='),
+      (4, '321.987.852-99', 'Guillermo', 'Belf', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA=='),
+      (5, '321.987.896-99', 'Sayre', 'Wisker', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA=='),
+      (6, '789.012.345-99', 'Melodie', 'Keggins', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA=='),
+      (7, '234.567.890-99', 'Nicky', 'Ivey', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA=='),
+      (8, '012.345.678-99', 'Moria', 'Tilliards', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA=='),
+      (9, '987.654.321-99', 'Jake', 'Austing', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA=='),
+      (10, '876.548.321-90', 'Joelynn', 'Rodie', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA==');
 
     CREATE TABLE IF NOT EXISTS "gestor_admin" (
       "ges_adm_id" SERIAL NOT NULL,
@@ -159,7 +159,7 @@ data:
     );
 
     INSERT INTO "gestor_escola" ("ges_id", "ges_identificador", "ges_primeiro_nome", "ges_segundo_nome", "ges_senha", "ges_ges_id") VALUES
-      (1, '119.876.543-21', 'João', 'Silva ', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA==', 1),
+      (1, '999.999.999-99', 'João', 'Silva ', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA==', 1),
       (2, '119.876.543-22', 'Pedro', 'Almeida', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA==', 3),
       (3, '119.012.345-67', 'Maria', 'Santos ', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA==', 2),
       (4, '119.012.345-68', 'Ana', 'Oliveira', 'gAAAAABkaPztyZ5W2nWs6hW8U4bozfk-Ah4CsoX5AlzmI5-yjoa6eNmkgXNNd1tJRpd9So5CEm1Oquozvz9eGuQQBvIgBKNJlA==', 1);
@@ -261,7 +261,7 @@ data:
 
     CREATE TABLE IF NOT EXISTS "avaliacao" (
       "ava_id" SERIAL NOT NULL,
-      "ava_data" TIMESTAMP NOT NULL,
+      "ava_data" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       "ava_nota" NUMERIC(10,2) NULL DEFAULT NULL,
       "alu_id" SERIAL NOT NULL,
       "ava_tipo" INTEGER NOT NULL,
@@ -290,7 +290,7 @@ data:
     CREATE TABLE IF NOT EXISTS "coleta" (
       "col_id" SERIAL NOT NULL,
       "col_audio" VARCHAR(256) NOT NULL,
-      "col_metrica" REAL NOT NULL,
+      "col_metrica" REAL NULL,
       "fra_id" SERIAL NOT NULL,
       "ava_id" SERIAL NOT NULL,
       PRIMARY KEY ("col_id"),
@@ -355,3 +355,40 @@ data:
     JOIN tipo_aluno AS ta ON ta.tip_alu_id = al.tip_alu
     JOIN professor AS pr ON pr.pro_id = tr.pro_id;
     COMMIT;
+
+    CREATE OR REPLACE FUNCTION update_nota_avaliacao()
+    RETURNS trigger AS 
+    'BEGIN
+    UPDATE avaliacao SET ava_data = CURRENT_TIMESTAMP, ava_nota = (SELECT avg(col_metrica) FROM coleta WHERE ava_id = NEW.ava_id) WHERE ava_id = NEW.ava_id;
+    RETURN NEW;
+    END;'
+    LANGUAGE plpgsql;
+
+    CREATE TRIGGER coleta_trigger
+    AFTER INSERT ON coleta
+    FOR EACH ROW
+    EXECUTE PROCEDURE update_nota_avaliacao();
+
+    CREATE VIEW view_escolas AS 
+    SELECT ue.uni_id,ue.uni_codigo_inep,ue.uni_nome,ce.cat_escola_desc,ed.end_rua,ed.end_numero,
+    ed.end_cep,cd.cid_nome,cd.cid_uf,ge.ges_identificador,ge.ges_primeiro_nome,ge.ges_segundo_nome 
+    FROM unidade_escolar AS ue
+    JOIN tipo_escola AS te ON te.tip_escola_id = ue.tip_esc
+    JOIN categoria_escolar AS ce ON ce.cat_escola_id = ue.cat_esc
+    JOIN endereco AS ed ON ed.end_id = ue.end_id
+    JOIN cidade AS cd ON cd.cid_id = ed.cid_id
+    JOIN gestor_escola AS ge ON ge.ges_id = ue.ges_id
+    COMMIT;
+
+    CREATE OR REPLACE FUNCTION update_escola()
+    RETURNS trigger AS 
+    'BEGIN
+    UPDATE unidade_escolar SET uni_nome = trim(NEW.uni_nome) WHERE uni_id = NEW.uni_id;
+    RETURN NEW;
+    END;'
+    LANGUAGE plpgsql;
+
+    CREATE TRIGGER escola_trigger
+    AFTER INSERT ON unidade_escolar
+    FOR EACH ROW
+    EXECUTE PROCEDURE update_escola();
